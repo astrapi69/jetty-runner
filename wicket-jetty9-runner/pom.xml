@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>de.alpharogroup</groupId>
+		<artifactId>jetty-runner</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<artifactId>wicket-jetty9-runner</artifactId>
+	<packaging>jar</packaging>
+
+	<properties>
+		<!-- WICKET version -->
+		<wicket.version>6.18.0</wicket.version>
+	</properties>
+
+	<name>wicket-jetty9-runner</name>
+
+	<dependencyManagement>
+
+		<dependencies>
+			<!-- WICKET DEPENDENCIES -->
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-core</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+
+		</dependencies>
+
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- JETTY 9 DEPENDENCIES -->
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-util</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-jmx</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-deploy</artifactId>
+		</dependency>
+		<!-- WICKET DEPENDENCIES -->
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-core</artifactId>
+		</dependency>
+		<!-- EXTERNAL LIBRARIES DEPENDENCIES -->
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+			<!-- JAULP DEPENDENCIES -->
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>jaulp.file</artifactId>
+			</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<inherited>true</inherited>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<inherited>true</inherited>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<inherited>true</inherited>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<inherited>true</inherited>
+				<artifactId>maven-eclipse-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>
