@@ -56,7 +56,7 @@
 		<commons-collections.version>3.2.1</commons-collections.version>
 		<commons-lang3.version>3.3.1</commons-lang3.version>
 		<!-- JAULP versions -->
-		<jaulp.core.version>3.10.0</jaulp.core.version>
+		<jaulp.core.version>3.11.0</jaulp.core.version>
 		<jaulp.collections.version>${jaulp.core.version}</jaulp.collections.version>
 		<jaulp.design.patterns.version>${jaulp.core.version}</jaulp.design.patterns.version>
 		<jaulp.email.version>${jaulp.core.version}</jaulp.email.version>
@@ -70,7 +70,6 @@
 		<jaulp.test.objects.version>${jaulp.core.version}</jaulp.test.objects.version>
 		<jaulp.time.version>${jaulp.core.version}</jaulp.time.version>
 		<jaulp.xml.version>${jaulp.core.version}</jaulp.xml.version>
-		<mystic.crypt.version>${jaulp.core.version}</mystic.crypt.version>
 		<!-- UNIT TEST versions -->
 		<testng.version>6.8.8</testng.version>
 		<junit.version>4.12</junit.version>

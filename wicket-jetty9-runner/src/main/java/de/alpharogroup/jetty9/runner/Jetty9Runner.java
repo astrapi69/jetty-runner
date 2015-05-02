@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 import javax.management.MBeanServer;
 import javax.servlet.DispatcherType;
 
-import net.sourceforge.jaulp.file.search.PathFinder;
+import de.alpharogroup.file.search.PathFinder;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
