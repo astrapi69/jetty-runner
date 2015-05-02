@@ -29,12 +29,17 @@ public class FilterHolderConfiguration implements Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/** The filter class. */
 	private Class<? extends Filter> filterClass;
+	
+	/** The init parameters. */
 	@Singular
 	private Map<String, String> initParameters;
 
+	/** The filter path. */
 	private String filterPath;
 
+	/** The name. */
 	private String name;
 
 
