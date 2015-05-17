@@ -71,7 +71,7 @@
 		<jaulp.time.version>${jaulp.core.version}</jaulp.time.version>
 		<jaulp.xml.version>${jaulp.core.version}</jaulp.xml.version>
 		<!-- UNIT TEST versions -->
-		<testng.version>6.8.8</testng.version>
+		<testng.version>6.9.4</testng.version>
 		<junit.version>4.12</junit.version>
 		<!-- MAVEN PLUGIN versions -->
 		<maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
