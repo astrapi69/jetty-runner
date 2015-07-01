@@ -51,7 +51,7 @@
 		<!-- LOMBOK version -->
 		<lombok.version>1.16.4</lombok.version>
 		<!-- JETTY 9 version -->
-		<jetty9.version>9.2.10.v20150310</jetty9.version>
+		<jetty9.version>9.3.0.v20150612</jetty9.version>
 		<!-- APACHE COMMONS LIBRARIES versions -->
 		<commons-collections.version>3.2.1</commons-collections.version>
 		<commons-lang3.version>3.3.1</commons-lang3.version>
