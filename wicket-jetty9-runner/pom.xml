@@ -13,7 +13,7 @@
 
 	<properties>
 		<!-- WICKET version -->
-		<wicket.version>6.18.0</wicket.version>
+		<wicket.version>[6.0.0,6.99)</wicket.version>
 	</properties>
 
 	<name>wicket-jetty9-runner</name>
