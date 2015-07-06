@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.jetty.server.HandlerContainer;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -38,4 +40,5 @@ public class ServletContextHandlerConfiguration
 	private List<ServletHolderConfiguration> servletHolderConfigurations;
 	@Singular
 	private Map<String, String> initParameters;
+	private HandlerContainer parent;
 }
