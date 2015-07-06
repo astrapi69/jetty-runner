@@ -157,8 +157,7 @@ public class Jetty9Runner
 			config.setContexts(new ContextHandlerCollection());
 		}
 		config.getHandlers().setHandlers(
-			new Handler[] { config.getServletContextHandler(), config.getContexts(),
-					new DefaultHandler() });
+			new Handler[] { config.getContexts(), new DefaultHandler() });
 
 		server.setHandler(config.getHandlers());
 
@@ -208,8 +207,16 @@ public class Jetty9Runner
 	public static ServletContextHandler getServletContextHandler(
 		ServletContextHandlerConfiguration configuration)
 	{
-		final ServletContextHandler context = new ServletContextHandler(
-			ServletContextHandler.SESSIONS);
+		final ServletContextHandler context;
+		if (configuration.getParent() != null)
+		{
+			context = new ServletContextHandler(configuration.getParent(),
+				configuration.getContextPath());
+		}
+		else
+		{
+			context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+		}
 		context.setContextPath(configuration.getContextPath());
 
 		context.setResourceBase(configuration.getWebapp().getAbsolutePath());
@@ -353,7 +360,8 @@ public class Jetty9Runner
 			".*/servlet-api-[^/]*\\.jar$");
 		WebAppProvider webAppProvider = new WebAppProvider();
 		webAppProvider.setMonitoredDirName(monitoredDirName);
-		if(defaultsDescriptor != null) {
+		if (defaultsDescriptor != null)
+		{
 			webAppProvider.setDefaultsDescriptor(defaultsDescriptor);
 		}
 		webAppProvider.setScanInterval(1);
