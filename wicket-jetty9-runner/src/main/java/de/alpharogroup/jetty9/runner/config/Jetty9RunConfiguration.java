@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import org.eclipse.jetty.deploy.DeploymentManager;
+import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
 @Getter
@@ -25,4 +28,7 @@ public class Jetty9RunConfiguration
 	int httpsPort;
 	String keyStorePathResource;
 	String keyStorePassword;
+	HandlerCollection handlers;
+	ContextHandlerCollection contexts;
+	DeploymentManager deployer;
 }

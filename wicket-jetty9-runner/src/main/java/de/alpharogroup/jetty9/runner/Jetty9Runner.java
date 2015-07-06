@@ -34,13 +34,20 @@ import org.apache.wicket.Application;
 import org.apache.wicket.protocol.http.ContextParamWebApplicationFactory;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.util.lang.Generics;
+import org.eclipse.jetty.deploy.DeploymentManager;
+import org.eclipse.jetty.deploy.PropertiesConfigurationManager;
+import org.eclipse.jetty.deploy.providers.WebAppProvider;
 import org.eclipse.jetty.jmx.MBeanContainer;
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.SecureRequestCustomizer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.SslConnectionFactory;
+import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.eclipse.jetty.server.handler.DefaultHandler;
+import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -141,7 +148,24 @@ public class Jetty9Runner
 			System.out.println();
 		}
 
-		server.setHandler(config.getServletContextHandler());
+		if (config.getHandlers() == null)
+		{
+			config.setHandlers(new HandlerCollection());
+		}
+		if (config.getContexts() == null)
+		{
+			config.setContexts(new ContextHandlerCollection());
+		}
+		config.getHandlers().setHandlers(
+			new Handler[] { config.getServletContextHandler(), config.getContexts(),
+					new DefaultHandler() });
+
+		server.setHandler(config.getHandlers());
+
+		if (config.getDeployer() != null)
+		{
+			server.addBean(config.getDeployer());
+		}
 
 		MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
 		MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
@@ -316,5 +340,27 @@ public class Jetty9Runner
 		webAppContext.setContextPath("/");
 		webAppContext.setWar(wa.getAbsolutePath());
 		return webAppContext;
+	}
+
+
+	// see:http://git.eclipse.org/c/jetty/org.eclipse.jetty.project.git/tree/examples/embedded/src/main/java/org/eclipse/jetty/embedded/LikeJettyXml.java
+	public static DeploymentManager getDeploymentManager(ContextHandlerCollection contexts,
+		String monitoredDirName, String defaultsDescriptor)
+	{
+		DeploymentManager deployer = new DeploymentManager();
+		deployer.setContexts(contexts);
+		deployer.setContextAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern",
+			".*/servlet-api-[^/]*\\.jar$");
+		WebAppProvider webAppProvider = new WebAppProvider();
+		webAppProvider.setMonitoredDirName(monitoredDirName);
+		if(defaultsDescriptor != null) {
+			webAppProvider.setDefaultsDescriptor(defaultsDescriptor);
+		}
+		webAppProvider.setScanInterval(1);
+		webAppProvider.setExtractWars(true);
+		webAppProvider.setConfigurationManager(new PropertiesConfigurationManager());
+
+		deployer.addAppProvider(webAppProvider);
+		return deployer;
 	}
 }
