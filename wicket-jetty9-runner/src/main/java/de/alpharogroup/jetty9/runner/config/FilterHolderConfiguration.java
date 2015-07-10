@@ -14,6 +14,10 @@ import lombok.Setter;
 import lombok.Singular;
 import lombok.ToString;
 
+/**
+ * FilterHolder Configuration.
+ * <p>This class is a holder of FilterHolder configuration. </p>
+ */
 @Getter
 @Setter
 @EqualsAndHashCode

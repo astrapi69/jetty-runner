@@ -41,32 +41,70 @@ import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.jetty9.runner.config.Jetty9RunConfiguration;
 import de.alpharogroup.jetty9.runner.factories.ServletContextHandlerFactory;
 
+/**
+ * The Class Jetty9Runner.
+ */
 public class Jetty9Runner
 {
 
+	/**
+	 * Run a jetty server with the given parameters.
+	 *
+	 * @param applicationClass the application class
+	 * @param webapp the webapp
+	 */
 	public static void run(Class<? extends Application> applicationClass, File webapp)
 	{
 		run(applicationClass, webapp, 8080, 8443, "wicket");
 	}
 
+	/**
+	 * Run a jetty server with the given parameters.
+	 *
+	 * @param applicationClass the application class
+	 * @param webapp the webapp
+	 * @param httpPort the http port
+	 * @param httpsPort the https port
+	 * @param keyStorePassword the key store password
+	 */
 	public static void run(Class<? extends Application> applicationClass, File webapp,
 		int httpPort, int httpsPort, String keyStorePassword)
 	{
 		runWithNewServer(ServletContextHandlerFactory.newServletContextHandler(applicationClass, webapp), httpPort, httpsPort);
 	}
 
+	/**
+	 * Run with new server.
+	 *
+	 * @param servletContextHandler the servlet context handler
+	 * @param httpPort the http port
+	 * @param httpsPort the https port
+	 */
 	public static void runWithNewServer(ServletContextHandler servletContextHandler, int httpPort,
 		int httpsPort)
 	{
 		runWithNewServer(servletContextHandler, httpPort, httpsPort, "wicket");
 	}
 
+	/**
+	 * Run a jetty server with the given parameters.
+	 *
+	 * @param config the config
+	 */
 	public static void run(Jetty9RunConfiguration config)
 	{
 		Server server = new Server();
 		run(server, config);
 	}
 
+	/**
+	 * Run with new server.
+	 *
+	 * @param servletContextHandler the servlet context handler
+	 * @param httpPort the http port
+	 * @param httpsPort the https port
+	 * @param keyStorePassword the key store password
+	 */
 	public static void runWithNewServer(ServletContextHandler servletContextHandler, int httpPort,
 		int httpsPort, String keyStorePassword)
 	{
@@ -74,6 +112,14 @@ public class Jetty9Runner
 		run(server, servletContextHandler, httpPort, httpsPort, keyStorePassword, "/keystore");
 	}
 
+	/**
+	 * Run a jetty server with the given parameters.
+	 *
+	 * @param servletContextHandler the servlet context handler
+	 * @param httpPort the http port
+	 * @param httpsPort the https port
+	 * @param keyStorePassword the key store password
+	 */
 	public static void run(ServletContextHandler servletContextHandler, int httpPort,
 		int httpsPort, String keyStorePassword)
 	{
@@ -81,6 +127,12 @@ public class Jetty9Runner
 		run(server, servletContextHandler, httpPort, httpsPort, keyStorePassword, "/keystore");
 	}
 
+	/**
+	 * Run a jetty server with the given parameters.
+	 *
+	 * @param server the server
+	 * @param config the config
+	 */
 	public static void run(Server server, Jetty9RunConfiguration config)
 	{
 		HttpConfiguration http_config = new HttpConfiguration();
@@ -163,6 +215,16 @@ public class Jetty9Runner
 		}
 	}
 
+	/**
+	 * Run a jetty server with the given parameters.
+	 *
+	 * @param server the server
+	 * @param servletContextHandler the servlet context handler
+	 * @param httpPort the http port
+	 * @param httpsPort the https port
+	 * @param keyStorePassword the key store password
+	 * @param keyStorePathResource the key store path resource
+	 */
 	public static void run(Server server, ServletContextHandler servletContextHandler,
 		int httpPort, int httpsPort, String keyStorePassword, String keyStorePathResource)
 	{
@@ -171,6 +233,13 @@ public class Jetty9Runner
 			.keyStorePathResource(keyStorePathResource).build());
 	}
 
+	/**
+	 * Gets the web app context.
+	 *
+	 * @param server the server
+	 * @param projectname the projectname
+	 * @return the web app context
+	 */
 	public static WebAppContext getWebAppContext(Server server, String projectname)
 	{
 		File webapp = PathFinder.getProjectDirectory();
@@ -182,6 +251,12 @@ public class Jetty9Runner
 		return webAppContext;
 	}
 
+	/**
+	 * Run a jetty server with the given parameters.
+	 *
+	 * @param server the server
+	 * @param config the config
+	 */
 	public static void runServletContextHandler(Server server, Jetty9RunConfiguration config)
 	{
 		HttpConfiguration http_config = new HttpConfiguration();

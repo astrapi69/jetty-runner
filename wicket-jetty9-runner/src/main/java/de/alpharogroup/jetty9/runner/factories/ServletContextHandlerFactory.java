@@ -25,9 +25,18 @@ import de.alpharogroup.jetty9.runner.config.FilterHolderConfiguration;
 import de.alpharogroup.jetty9.runner.config.ServletContextHandlerConfiguration;
 import de.alpharogroup.jetty9.runner.config.ServletHolderConfiguration;
 
+/**
+ * A factory for creating ServletContextHandler objects.
+ */
 public class ServletContextHandlerFactory
 {
 
+	/**
+	 * New servlet context handler.
+	 *
+	 * @param configuration the configuration
+	 * @return the servlet context handler
+	 */
 	public static ServletContextHandler newServletContextHandler(
 		ServletContextHandlerConfiguration configuration)
 	{
@@ -61,6 +70,16 @@ public class ServletContextHandlerFactory
 		return context;
 	}
 
+	/**
+	 * New servlet context handler.
+	 *
+	 * @param applicationClass the application class
+	 * @param contextPath the context path
+	 * @param webapp the webapp
+	 * @param maxInactiveInterval the max inactive interval
+	 * @param filterPath the filter path
+	 * @return the servlet context handler
+	 */
 	public static ServletContextHandler newServletContextHandler(
 		Class<? extends Application> applicationClass, String contextPath, File webapp,
 		int maxInactiveInterval, String filterPath)
@@ -73,12 +92,26 @@ public class ServletContextHandlerFactory
 			.initParameter(WicketFilter.FILTER_MAPPING_PARAM, filterPath).filterPath(filterPath)
 			.build());
 	}
+	
+	/**
+	 * New servlet context handler.
+	 *
+	 * @param applicationClass the application class
+	 * @param webapp the webapp
+	 * @return the servlet context handler
+	 */
 	public static ServletContextHandler newServletContextHandler(
 		Class<? extends Application> applicationClass, File webapp)
 	{
 		return newServletContextHandler(applicationClass, "/", webapp, 300, "/*");
 	}
 
+	/**
+	 * New servlet context handler.
+	 *
+	 * @param applicationClass the application class
+	 * @return the servlet context handler
+	 */
 	public static ServletContextHandler newServletContextHandler(
 		Class<? extends Application> applicationClass)
 	{
@@ -86,6 +119,12 @@ public class ServletContextHandlerFactory
 			"/*");
 	}
 
+	/**
+	 * Gets the new servlet context handler.
+	 *
+	 * @param configuration the configuration
+	 * @return the new servlet context handler
+	 */
 	public static ServletContextHandler getNewServletContextHandler(
 		ServletContextHandlerConfiguration configuration)
 	{
@@ -110,6 +149,12 @@ public class ServletContextHandlerFactory
 	}
 
 
+	/**
+	 * Initialize filter holder.
+	 *
+	 * @param configuration the configuration
+	 * @param context the context
+	 */
 	private static void initializeFilterHolder(ServletContextHandlerConfiguration configuration,
 		final ServletContextHandler context)
 	{
@@ -142,6 +187,12 @@ public class ServletContextHandlerFactory
 		}
 	}
 
+	/**
+	 * Initialize servlet holder.
+	 *
+	 * @param configuration the configuration
+	 * @param context the context
+	 */
 	private static void initializeServletHolder(ServletContextHandlerConfiguration configuration,
 		final ServletContextHandler context)
 	{

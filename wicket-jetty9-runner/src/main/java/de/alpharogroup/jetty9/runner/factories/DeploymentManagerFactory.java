@@ -5,8 +5,20 @@ import org.eclipse.jetty.deploy.PropertiesConfigurationManager;
 import org.eclipse.jetty.deploy.providers.WebAppProvider;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 
+/**
+ * A factory for creating DeploymentManager objects.
+ */
 public class DeploymentManagerFactory
 {
+	
+	/**
+	 * New deployment manager.
+	 *
+	 * @param contexts the contexts
+	 * @param monitoredDirName the monitored dir name
+	 * @param defaultsDescriptor the defaults descriptor
+	 * @return the deployment manager
+	 */
 	// see:http://git.eclipse.org/c/jetty/org.eclipse.jetty.project.git/tree/examples/embedded/src/main/java/org/eclipse/jetty/embedded/LikeJettyXml.java
 	public static DeploymentManager newDeploymentManager(ContextHandlerCollection contexts,
 		String monitoredDirName, String defaultsDescriptor)

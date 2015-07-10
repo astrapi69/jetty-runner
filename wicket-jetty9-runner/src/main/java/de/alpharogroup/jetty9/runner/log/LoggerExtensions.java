@@ -14,11 +14,23 @@ import org.apache.log4j.PatternLayout;
 public class LoggerExtensions
 {
 
+	/**
+	 * Adds the file appender to the given logger.
+	 *
+	 * @param logger the logger
+	 * @param fileAppender the file appender
+	 */
 	public static void addFileAppender(Logger logger, FileAppender fileAppender)
 	{
 		logger.addAppender(fileAppender);
 	}
 
+	/**
+	 * New file appender.
+	 *
+	 * @param logFilePath the log file path
+	 * @return the file appender
+	 */
 	public static FileAppender newFileAppender(String logFilePath)
 	{
 		FileAppender appender = new FileAppender();
