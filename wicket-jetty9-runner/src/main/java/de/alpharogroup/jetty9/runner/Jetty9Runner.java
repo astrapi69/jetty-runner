@@ -48,12 +48,34 @@ public class Jetty9Runner
 {
 
 	/**
+	 * Gets the web app context.
+	 *
+	 * @param server
+	 *            the server
+	 * @param projectname
+	 *            the projectname
+	 * @return the web app context
+	 */
+	public static WebAppContext getWebAppContext(final Server server, final String projectname)
+	{
+		final File webapp = PathFinder.getProjectDirectory();
+		final File wa = PathFinder.getRelativePath(webapp, projectname, "src", "main", "webapp");
+		final WebAppContext webAppContext = new WebAppContext();
+		webAppContext.setServer(server);
+		webAppContext.setContextPath("/");
+		webAppContext.setWar(wa.getAbsolutePath());
+		return webAppContext;
+	}
+
+	/**
 	 * Run a jetty server with the given parameters.
 	 *
-	 * @param applicationClass the application class
-	 * @param webapp the webapp
+	 * @param applicationClass
+	 *            the application class
+	 * @param webapp
+	 *            the webapp
 	 */
-	public static void run(Class<? extends Application> applicationClass, File webapp)
+	public static void run(final Class<? extends Application> applicationClass, final File webapp)
 	{
 		run(applicationClass, webapp, 8080, 8443, "wicket");
 	}
@@ -61,92 +83,60 @@ public class Jetty9Runner
 	/**
 	 * Run a jetty server with the given parameters.
 	 *
-	 * @param applicationClass the application class
-	 * @param webapp the webapp
-	 * @param httpPort the http port
-	 * @param httpsPort the https port
-	 * @param keyStorePassword the key store password
+	 * @param applicationClass
+	 *            the application class
+	 * @param webapp
+	 *            the webapp
+	 * @param httpPort
+	 *            the http port
+	 * @param httpsPort
+	 *            the https port
+	 * @param keyStorePassword
+	 *            the key store password
 	 */
-	public static void run(Class<? extends Application> applicationClass, File webapp,
-		int httpPort, int httpsPort, String keyStorePassword)
+	public static void run(final Class<? extends Application> applicationClass, final File webapp,
+		final int httpPort, final int httpsPort, final String keyStorePassword)
 	{
-		runWithNewServer(ServletContextHandlerFactory.newServletContextHandler(applicationClass, webapp), httpPort, httpsPort);
-	}
-
-	/**
-	 * Run with new server.
-	 *
-	 * @param servletContextHandler the servlet context handler
-	 * @param httpPort the http port
-	 * @param httpsPort the https port
-	 */
-	public static void runWithNewServer(ServletContextHandler servletContextHandler, int httpPort,
-		int httpsPort)
-	{
-		runWithNewServer(servletContextHandler, httpPort, httpsPort, "wicket");
+		runWithNewServer(
+			ServletContextHandlerFactory.newServletContextHandler(applicationClass, webapp),
+			httpPort, httpsPort);
 	}
 
 	/**
 	 * Run a jetty server with the given parameters.
 	 *
-	 * @param config the config
+	 * @param config
+	 *            the config
 	 */
-	public static void run(Jetty9RunConfiguration config)
+	public static void run(final Jetty9RunConfiguration config)
 	{
-		Server server = new Server();
+		final Server server = new Server();
 		run(server, config);
 	}
 
 	/**
-	 * Run with new server.
-	 *
-	 * @param servletContextHandler the servlet context handler
-	 * @param httpPort the http port
-	 * @param httpsPort the https port
-	 * @param keyStorePassword the key store password
-	 */
-	public static void runWithNewServer(ServletContextHandler servletContextHandler, int httpPort,
-		int httpsPort, String keyStorePassword)
-	{
-		Server server = new Server();
-		run(server, servletContextHandler, httpPort, httpsPort, keyStorePassword, "/keystore");
-	}
-
-	/**
 	 * Run a jetty server with the given parameters.
 	 *
-	 * @param servletContextHandler the servlet context handler
-	 * @param httpPort the http port
-	 * @param httpsPort the https port
-	 * @param keyStorePassword the key store password
+	 * @param server
+	 *            the server
+	 * @param config
+	 *            the config
 	 */
-	public static void run(ServletContextHandler servletContextHandler, int httpPort,
-		int httpsPort, String keyStorePassword)
+	public static void run(final Server server, final Jetty9RunConfiguration config)
 	{
-		Server server = new Server();
-		run(server, servletContextHandler, httpPort, httpsPort, keyStorePassword, "/keystore");
-	}
-
-	/**
-	 * Run a jetty server with the given parameters.
-	 *
-	 * @param server the server
-	 * @param config the config
-	 */
-	public static void run(Server server, Jetty9RunConfiguration config)
-	{
-		HttpConfiguration http_config = new HttpConfiguration();
+		final HttpConfiguration http_config = new HttpConfiguration();
 		http_config.setSecureScheme("https");
 		http_config.setSecurePort(config.getHttpsPort());
 		http_config.setOutputBufferSize(32768);
 
-		ServerConnector http = new ServerConnector(server, new HttpConnectionFactory(http_config));
+		final ServerConnector http = new ServerConnector(server, new HttpConnectionFactory(
+			http_config));
 		http.setPort(config.getHttpPort());
 		http.setIdleTimeout(1000 * 60 * 60);
 
 		server.addConnector(http);
 
-		Resource keystore = Resource.newClassPathResource(config.getKeyStorePathResource());
+		final Resource keystore = Resource.newClassPathResource(config.getKeyStorePathResource());
 		if (keystore != null && keystore.exists())
 		{
 			// if a keystore for a SSL certificate is available, start a SSL
@@ -156,15 +146,15 @@ public class Jetty9Runner
 			// use this certificate anywhere important as the passwords are
 			// available in the source.
 
-			SslContextFactory sslContextFactory = new SslContextFactory();
+			final SslContextFactory sslContextFactory = new SslContextFactory();
 			sslContextFactory.setKeyStoreResource(keystore);
 			sslContextFactory.setKeyStorePassword(config.getKeyStorePassword());
 			sslContextFactory.setKeyManagerPassword(config.getKeyStorePassword());
 
-			HttpConfiguration https_config = new HttpConfiguration(http_config);
+			final HttpConfiguration https_config = new HttpConfiguration(http_config);
 			https_config.addCustomizer(new SecureRequestCustomizer());
 
-			ServerConnector https = new ServerConnector(server, new SslConnectionFactory(
+			final ServerConnector https = new ServerConnector(server, new SslConnectionFactory(
 				sslContextFactory, "http/1.1"), new HttpConnectionFactory(https_config))
 			{
 
@@ -198,8 +188,8 @@ public class Jetty9Runner
 			server.addBean(config.getDeployer());
 		}
 
-		MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-		MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
+		final MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+		final MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
 		server.addEventListener(mBeanContainer);
 		server.addBean(mBeanContainer);
 
@@ -208,7 +198,7 @@ public class Jetty9Runner
 			server.start();
 			server.join();
 		}
-		catch (Exception e)
+		catch (final Exception e)
 		{
 			e.printStackTrace();
 			System.exit(100);
@@ -218,15 +208,22 @@ public class Jetty9Runner
 	/**
 	 * Run a jetty server with the given parameters.
 	 *
-	 * @param server the server
-	 * @param servletContextHandler the servlet context handler
-	 * @param httpPort the http port
-	 * @param httpsPort the https port
-	 * @param keyStorePassword the key store password
-	 * @param keyStorePathResource the key store path resource
+	 * @param server
+	 *            the server
+	 * @param servletContextHandler
+	 *            the servlet context handler
+	 * @param httpPort
+	 *            the http port
+	 * @param httpsPort
+	 *            the https port
+	 * @param keyStorePassword
+	 *            the key store password
+	 * @param keyStorePathResource
+	 *            the key store path resource
 	 */
-	public static void run(Server server, ServletContextHandler servletContextHandler,
-		int httpPort, int httpsPort, String keyStorePassword, String keyStorePathResource)
+	public static void run(final Server server, final ServletContextHandler servletContextHandler,
+		final int httpPort, final int httpsPort, final String keyStorePassword,
+		final String keyStorePathResource)
 	{
 		run(server, Jetty9RunConfiguration.builder().servletContextHandler(servletContextHandler)
 			.httpPort(httpPort).httpsPort(httpsPort).keyStorePassword(keyStorePassword)
@@ -234,43 +231,48 @@ public class Jetty9Runner
 	}
 
 	/**
-	 * Gets the web app context.
+	 * Run a jetty server with the given parameters.
 	 *
-	 * @param server the server
-	 * @param projectname the projectname
-	 * @return the web app context
+	 * @param servletContextHandler
+	 *            the servlet context handler
+	 * @param httpPort
+	 *            the http port
+	 * @param httpsPort
+	 *            the https port
+	 * @param keyStorePassword
+	 *            the key store password
 	 */
-	public static WebAppContext getWebAppContext(Server server, String projectname)
+	public static void run(final ServletContextHandler servletContextHandler, final int httpPort,
+		final int httpsPort, final String keyStorePassword)
 	{
-		File webapp = PathFinder.getProjectDirectory();
-		File wa = PathFinder.getRelativePath(webapp, projectname, "src", "main", "webapp");
-		WebAppContext webAppContext = new WebAppContext();
-		webAppContext.setServer(server);
-		webAppContext.setContextPath("/");
-		webAppContext.setWar(wa.getAbsolutePath());
-		return webAppContext;
+		final Server server = new Server();
+		run(server, servletContextHandler, httpPort, httpsPort, keyStorePassword, "/keystore");
 	}
 
 	/**
 	 * Run a jetty server with the given parameters.
 	 *
-	 * @param server the server
-	 * @param config the config
+	 * @param server
+	 *            the server
+	 * @param config
+	 *            the config
 	 */
-	public static void runServletContextHandler(Server server, Jetty9RunConfiguration config)
+	public static void runServletContextHandler(final Server server,
+		final Jetty9RunConfiguration config)
 	{
-		HttpConfiguration http_config = new HttpConfiguration();
+		final HttpConfiguration http_config = new HttpConfiguration();
 		http_config.setSecureScheme("https");
 		http_config.setSecurePort(config.getHttpsPort());
 		http_config.setOutputBufferSize(32768);
 
-		ServerConnector http = new ServerConnector(server, new HttpConnectionFactory(http_config));
+		final ServerConnector http = new ServerConnector(server, new HttpConnectionFactory(
+			http_config));
 		http.setPort(config.getHttpPort());
 		http.setIdleTimeout(1000 * 60 * 60);
 
 		server.addConnector(http);
 
-		Resource keystore = Resource.newClassPathResource(config.getKeyStorePathResource());
+		final Resource keystore = Resource.newClassPathResource(config.getKeyStorePathResource());
 		if (keystore != null && keystore.exists())
 		{
 			// if a keystore for a SSL certificate is available, start a SSL
@@ -280,15 +282,15 @@ public class Jetty9Runner
 			// use this certificate anywhere important as the passwords are
 			// available in the source.
 
-			SslContextFactory sslContextFactory = new SslContextFactory();
+			final SslContextFactory sslContextFactory = new SslContextFactory();
 			sslContextFactory.setKeyStoreResource(keystore);
 			sslContextFactory.setKeyStorePassword(config.getKeyStorePassword());
 			sslContextFactory.setKeyManagerPassword(config.getKeyStorePassword());
 
-			HttpConfiguration https_config = new HttpConfiguration(http_config);
+			final HttpConfiguration https_config = new HttpConfiguration(http_config);
 			https_config.addCustomizer(new SecureRequestCustomizer());
 
-			ServerConnector https = new ServerConnector(server, new SslConnectionFactory(
+			final ServerConnector https = new ServerConnector(server, new SslConnectionFactory(
 				sslContextFactory, "http/1.1"), new HttpConnectionFactory(https_config))
 			{
 
@@ -306,8 +308,8 @@ public class Jetty9Runner
 
 		server.setHandler(config.getServletContextHandler());
 
-		MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-		MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
+		final MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+		final MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
 		server.addEventListener(mBeanContainer);
 		server.addBean(mBeanContainer);
 
@@ -316,10 +318,45 @@ public class Jetty9Runner
 			server.start();
 			server.join();
 		}
-		catch (Exception e)
+		catch (final Exception e)
 		{
 			e.printStackTrace();
 			System.exit(100);
 		}
+	}
+
+	/**
+	 * Run with new server.
+	 *
+	 * @param servletContextHandler
+	 *            the servlet context handler
+	 * @param httpPort
+	 *            the http port
+	 * @param httpsPort
+	 *            the https port
+	 */
+	public static void runWithNewServer(final ServletContextHandler servletContextHandler,
+		final int httpPort, final int httpsPort)
+	{
+		runWithNewServer(servletContextHandler, httpPort, httpsPort, "wicket");
+	}
+
+	/**
+	 * Run with new server.
+	 *
+	 * @param servletContextHandler
+	 *            the servlet context handler
+	 * @param httpPort
+	 *            the http port
+	 * @param httpsPort
+	 *            the https port
+	 * @param keyStorePassword
+	 *            the key store password
+	 */
+	public static void runWithNewServer(final ServletContextHandler servletContextHandler,
+		final int httpPort, final int httpsPort, final String keyStorePassword)
+	{
+		final Server server = new Server();
+		run(server, servletContextHandler, httpPort, httpsPort, keyStorePassword, "/keystore");
 	}
 }

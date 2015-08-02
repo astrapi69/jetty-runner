@@ -16,7 +16,9 @@ import lombok.ToString;
 
 /**
  * FilterHolder Configuration.
- * <p>This class is a holder of FilterHolder configuration. </p>
+ * <p>
+ * This class is a holder of FilterHolder configuration.
+ * </p>
  */
 @Getter
 @Setter
@@ -24,8 +26,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class FilterHolderConfiguration implements Serializable
+final @Builder public class FilterHolderConfiguration implements Serializable
 {
 
 	/**
@@ -35,7 +36,7 @@ public class FilterHolderConfiguration implements Serializable
 
 	/** The filter class. */
 	private Class<? extends Filter> filterClass;
-	
+
 	/** The init parameters. */
 	@Singular
 	private Map<String, String> initParameters;

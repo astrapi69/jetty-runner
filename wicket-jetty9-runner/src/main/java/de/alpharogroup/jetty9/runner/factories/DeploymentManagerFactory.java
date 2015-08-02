@@ -10,24 +10,27 @@ import org.eclipse.jetty.server.handler.ContextHandlerCollection;
  */
 public class DeploymentManagerFactory
 {
-	
+
 	/**
 	 * New deployment manager.
 	 *
-	 * @param contexts the contexts
-	 * @param monitoredDirName the monitored dir name
-	 * @param defaultsDescriptor the defaults descriptor
+	 * @param contexts
+	 *            the contexts
+	 * @param monitoredDirName
+	 *            the monitored dir name
+	 * @param defaultsDescriptor
+	 *            the defaults descriptor
 	 * @return the deployment manager
 	 */
 	// see:http://git.eclipse.org/c/jetty/org.eclipse.jetty.project.git/tree/examples/embedded/src/main/java/org/eclipse/jetty/embedded/LikeJettyXml.java
-	public static DeploymentManager newDeploymentManager(ContextHandlerCollection contexts,
-		String monitoredDirName, String defaultsDescriptor)
+	public static DeploymentManager newDeploymentManager(final ContextHandlerCollection contexts,
+		final String monitoredDirName, final String defaultsDescriptor)
 	{
-		DeploymentManager deployer = new DeploymentManager();
+		final DeploymentManager deployer = new DeploymentManager();
 		deployer.setContexts(contexts);
 		deployer.setContextAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern",
 			".*/servlet-api-[^/]*\\.jar$");
-		WebAppProvider webAppProvider = new WebAppProvider();
+		final WebAppProvider webAppProvider = new WebAppProvider();
 		webAppProvider.setMonitoredDirName(monitoredDirName);
 		if (defaultsDescriptor != null)
 		{

@@ -17,10 +17,12 @@ public class LoggerExtensions
 	/**
 	 * Adds the file appender to the given logger.
 	 *
-	 * @param logger the logger
-	 * @param fileAppender the file appender
+	 * @param logger
+	 *            the logger
+	 * @param fileAppender
+	 *            the file appender
 	 */
-	public static void addFileAppender(Logger logger, FileAppender fileAppender)
+	public static void addFileAppender(final Logger logger, final FileAppender fileAppender)
 	{
 		logger.addAppender(fileAppender);
 	}
@@ -28,12 +30,13 @@ public class LoggerExtensions
 	/**
 	 * New file appender.
 	 *
-	 * @param logFilePath the log file path
+	 * @param logFilePath
+	 *            the log file path
 	 * @return the file appender
 	 */
-	public static FileAppender newFileAppender(String logFilePath)
+	public static FileAppender newFileAppender(final String logFilePath)
 	{
-		FileAppender appender = new FileAppender();
+		final FileAppender appender = new FileAppender();
 		appender.setName("MyFileAppender");
 		appender.setLayout(new PatternLayout("%d %-5p [%c{1}] %m%n"));
 		appender.setFile(logFilePath);

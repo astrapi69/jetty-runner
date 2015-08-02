@@ -16,7 +16,9 @@ import lombok.ToString;
 
 /**
  * ServletHolder configuration.
- * <p>This class is a holder of the ServletHolder configuration. </p>
+ * <p>
+ * This class is a holder of the ServletHolder configuration.
+ * </p>
  */
 @Getter
 @Setter
@@ -24,7 +26,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder 
 public class ServletHolderConfiguration implements Serializable
 {
 	/** The serialVersionUID. */
@@ -32,7 +34,7 @@ public class ServletHolderConfiguration implements Serializable
 
 	/** The servlet class. */
 	private Class<? extends Servlet> servletClass;
-	
+
 	/** The init parameters. */
 	@Singular
 	private Map<String, String> initParameters;
