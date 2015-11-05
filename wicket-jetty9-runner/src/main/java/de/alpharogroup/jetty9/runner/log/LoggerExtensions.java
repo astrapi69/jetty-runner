@@ -9,6 +9,8 @@ import org.apache.log4j.PatternLayout;
 
 /**
  * Logger extensions for appenders.
+ *
+ * @deprecated use instead de.alpharogroup.log.LoggerExtensions
  */
 @UtilityClass
 public class LoggerExtensions

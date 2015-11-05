@@ -37,6 +37,7 @@ public class ServletContextHandlerFactory
 	 * @param configuration
 	 *            the configuration
 	 * @return the new servlet context handler
+	 * @deprecated use instead the same class and method in the config project
 	 */
 	public static ServletContextHandler getNewServletContextHandler(
 		final ServletContextHandlerConfiguration configuration)
@@ -69,6 +70,7 @@ public class ServletContextHandlerFactory
 	 *            the configuration
 	 * @param context
 	 *            the context
+	 * @deprecated use instead the same class and method in the config project
 	 */
 	private static void initializeFilterHolder(
 		final ServletContextHandlerConfiguration configuration, final ServletContextHandler context)
@@ -109,6 +111,7 @@ public class ServletContextHandlerFactory
 	 *            the configuration
 	 * @param context
 	 *            the context
+	 * @deprecated use instead the same class and method in the config project
 	 */
 	private static void initializeServletHolder(
 		final ServletContextHandlerConfiguration configuration, final ServletContextHandler context)
@@ -187,8 +190,49 @@ public class ServletContextHandlerFactory
 	 * @param filterPath
 	 *            the filter path
 	 * @return the servlet context handler
+	 * @deprecated use instead
+	 *             {@link ServletContextHandlerFactory#newWicketServletContextHandler(Class, String, File, int, String)}
 	 */
 	public static ServletContextHandler newServletContextHandler(
+		final Class<? extends Application> applicationClass, final String contextPath,
+		final File webapp, final int maxInactiveInterval, final String filterPath)
+	{
+		return newWicketServletContextHandler(applicationClass, contextPath, webapp,
+			maxInactiveInterval,
+			filterPath);
+	}
+
+	/**
+	 * New servlet context handler.
+	 *
+	 * @param configuration
+	 *            the configuration
+	 * @return the servlet context handler
+	 * @deprecated use instead
+	 *             {@link ServletContextHandlerFactory#newWicketServletContextHandler(ServletContextHandlerConfiguration)}
+	 */
+	public static ServletContextHandler newServletContextHandler(
+		final ServletContextHandlerConfiguration configuration)
+	{
+		return newWicketServletContextHandler(configuration);
+	}
+
+	/**
+	 * New wicket filter context handler.
+	 *
+	 * @param applicationClass
+	 *            the application class
+	 * @param contextPath
+	 *            the context path
+	 * @param webapp
+	 *            the webapp
+	 * @param maxInactiveInterval
+	 *            the max inactive interval
+	 * @param filterPath
+	 *            the filter path
+	 * @return the servlet context handler
+	 */
+	public static ServletContextHandler newWicketServletContextHandler(
 		final Class<? extends Application> applicationClass, final String contextPath,
 		final File webapp, final int maxInactiveInterval, final String filterPath)
 	{
@@ -202,13 +246,13 @@ public class ServletContextHandlerFactory
 	}
 
 	/**
-	 * New servlet context handler.
+	 * New wicket servlet context handler.
 	 *
 	 * @param configuration
 	 *            the configuration
 	 * @return the servlet context handler
 	 */
-	public static ServletContextHandler newServletContextHandler(
+	public static ServletContextHandler newWicketServletContextHandler(
 		final ServletContextHandlerConfiguration configuration)
 	{
 		final ServletContextHandler context;

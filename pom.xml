@@ -1,25 +1,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	
+
 	<modelVersion>4.0.0</modelVersion>
-		
+
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-java-parent</artifactId>
 		<version>2.0.0</version>
 		<relativePath></relativePath>
 	</parent>
-	
+
 	<artifactId>jetty-runner</artifactId>
-	<version>3.0.0</version>
+	<version>3.1.0</version>
 	<inceptionYear>2015</inceptionYear>
 	<packaging>pom</packaging>
 	<name>jetty-runner</name>
 
 	<description>Parent project for the projects that want to run jetty.</description>
-	
+
 	<url>https://github.com/astrapi69/jetty-runner</url>
-	
+
 	<scm>
 		<connection>scm:git:git:@github.com:astrapi69/jetty-runner.git</connection>
 		<developerConnection>scm:git:git@github.com:astrapi69/jetty-runner.git</developerConnection>
@@ -28,6 +28,8 @@
 
 	<modules>
 		<module>wicket-jetty9-runner</module>
+		<module>jetty-runner-config</module>
+		<module>jetty-runner-core</module>
 	</modules>
 
 	<properties>
@@ -54,7 +56,19 @@
 
 	<dependencyManagement>
 
-		<dependencies>			
+		<dependencies>
+			<!-- PROJECT-MODULE DEPENDENCIES -->
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>jetty-runner-config</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>jetty-runner-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<!-- EXTERNAL LIBRARIES DEPENDENCIES -->
 			<dependency>
 				<groupId>commons-collections</groupId>

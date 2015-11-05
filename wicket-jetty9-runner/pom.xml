@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>jetty-runner</artifactId>
-		<version>3.0.0</version>
+		<version>3.1.0</version>
 	</parent>
 
 	<artifactId>wicket-jetty9-runner</artifactId>
@@ -33,6 +33,16 @@
 	</dependencyManagement>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>jetty-runner-config</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>jetty-runner-core</artifactId>
+		</dependency>
 		<!-- JETTY 9 DEPENDENCIES -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -68,11 +78,11 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
-			<!-- JAULP DEPENDENCIES -->
-			<dependency>
-				<groupId>de.alpharogroup</groupId>
-				<artifactId>jaulp.file</artifactId>
-			</dependency>
+		<!-- JAULP DEPENDENCIES -->
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>jaulp.file</artifactId>
+		</dependency>
 
 	</dependencies>
 
