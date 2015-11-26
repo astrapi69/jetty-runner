@@ -19,7 +19,7 @@ import java.io.File;
 
 import org.apache.wicket.Application;
 
-import de.alpharogroup.jetty9.runner.factories.ServletContextHandlerFactory;
+import de.alpharogroup.jetty9.runner.factories.WicketServletContextHandlerFactory;
 
 /**
  * The Class {@link WicketJetty9Runner}.
@@ -58,7 +58,7 @@ public class WicketJetty9Runner
 		final int httpPort, final int httpsPort, final String keyStorePassword)
 	{
 		Jetty9Runner.runWithNewServer(
-			ServletContextHandlerFactory.newServletContextHandler(applicationClass, webapp),
+			WicketServletContextHandlerFactory.newServletContextHandler(applicationClass, webapp),
 			httpPort, httpsPort);
 	}
 
