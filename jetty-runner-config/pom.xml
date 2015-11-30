@@ -6,8 +6,8 @@
 		<artifactId>jetty-runner</artifactId>
 		<version>3.3.0</version>
 	</parent>
-	<artifactId>jetty-runner-config</artifactId>	
-	
+	<artifactId>jetty-runner-config</artifactId>
+
 	<dependencies>
 		<!-- JETTY 9 DEPENDENCIES -->
 		<dependency>
@@ -29,11 +29,11 @@
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-deploy</artifactId>
-		</dependency>		
+		</dependency>
 		<!-- EXTERNAL LIBRARIES DEPENDENCIES -->
 		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
