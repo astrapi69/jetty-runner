@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-java-parent</artifactId>
-		<version>2.0.0</version>
+		<version>2.2.0</version>
 		<relativePath></relativePath>
 	</parent>
 
 	<artifactId>jetty-runner</artifactId>
-	<version>3.1.0</version>
+	<version>3.2.0</version>
 	<inceptionYear>2015</inceptionYear>
 	<packaging>pom</packaging>
 	<name>jetty-runner</name>
@@ -38,20 +38,9 @@
 		<!-- APACHE COMMONS LIBRARIES versions -->
 		<commons-collections.version>3.2.1</commons-collections.version>
 		<commons-lang3.version>3.3.1</commons-lang3.version>
-		<!-- JAULP versions -->
-		<jaulp.core.version>4.2.0</jaulp.core.version>
-		<jaulp.collections.version>${jaulp.core.version}</jaulp.collections.version>
-		<jaulp.design.patterns.version>${jaulp.core.version}</jaulp.design.patterns.version>
-		<jaulp.email.version>${jaulp.core.version}</jaulp.email.version>
-		<jaulp.file.version>${jaulp.core.version}</jaulp.file.version>
-		<jaulp.generic.tree.version>${jaulp.core.version}</jaulp.generic.tree.version>
-		<jaulp.lang.version>${jaulp.core.version}</jaulp.lang.version>
-		<jaulp.net.version>${jaulp.core.version}</jaulp.net.version>
-		<jaulp.random.version>${jaulp.core.version}</jaulp.random.version>
-		<jaulp.swing.version>${jaulp.core.version}</jaulp.swing.version>
-		<jaulp.test.objects.version>${jaulp.core.version}</jaulp.test.objects.version>
-		<jaulp.time.version>${jaulp.core.version}</jaulp.time.version>
-		<jaulp.xml.version>${jaulp.core.version}</jaulp.xml.version>
+		<!-- NEW EXTENSIONS LIB versions -->
+		<extensions-lib.version>4.7.0</extensions-lib.version>
+		<file-worker.version>${extensions-lib.version}</file-worker.version>
 	</properties>
 
 	<dependencyManagement>
@@ -83,8 +72,8 @@
 			<!-- JAULP DEPENDENCIES -->
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
-				<artifactId>jaulp.file</artifactId>
-				<version>${jaulp.file.version}</version>
+				<artifactId>file-worker</artifactId>
+				<version>${file-worker.version}</version>
 			</dependency>
 			<!-- JETTY 9 DEPENDENCIES -->
 			<dependency>

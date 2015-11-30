@@ -81,7 +81,7 @@
 		<!-- JAULP DEPENDENCIES -->
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
-			<artifactId>jaulp.file</artifactId>
+			<artifactId>file-worker</artifactId>
 		</dependency>
 
 	</dependencies>
