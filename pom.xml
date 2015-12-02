@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>jetty-runner</artifactId>
-	<version>3.3.0</version>
+	<version>3.4.0</version>
 	<inceptionYear>2015</inceptionYear>
 	<packaging>pom</packaging>
 	<name>jetty-runner</name>
@@ -37,10 +37,9 @@
 		<jetty9.version>9.3.6.v20151106</jetty9.version>
 		<!-- APACHE COMMONS LIBRARIES versions -->
 		<commons-collections4.version>4.0</commons-collections4.version>
-		<commons-collections.version>3.2.1</commons-collections.version>
 		<commons-lang3.version>3.3.1</commons-lang3.version>
 		<!-- NEW EXTENSIONS LIB versions -->
-		<extensions-lib.version>4.7.0</extensions-lib.version>
+		<extensions-lib.version>4.8.0</extensions-lib.version>
 		<file-worker.version>${extensions-lib.version}</file-worker.version>
 	</properties>
 
