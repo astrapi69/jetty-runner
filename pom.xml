@@ -19,12 +19,65 @@
 	<description>Parent project for the projects that want to run jetty.</description>
 
 	<url>https://github.com/astrapi69/jetty-runner</url>
+	
+	<licenses>
+
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+
+	</licenses>
+	
+	<developers>
+
+		<developer>
+			<id>astrapi69</id>
+			<name>Asterios Raptis</name>
+			<email>astrapi69 at users.sf.net</email>
+			<timezone>Berlin</timezone>
+			<roles>
+				<role>Project manager</role>
+				<role>Developer</role>
+			</roles>
+		</developer>
+
+	</developers>
+
+	<organization>
+		<name>Alpha Ro Group UG (haftungsbeschrängt)</name>
+		<url>http://www.alpharogroup.de/</url>
+	</organization>
 
 	<scm>
 		<connection>scm:git:git:@github.com:astrapi69/jetty-runner.git</connection>
 		<developerConnection>scm:git:git@github.com:astrapi69/jetty-runner.git</developerConnection>
 		<url>git:@github.com:astrapi69/jetty-runner.git</url>
 	</scm>
+	
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<name>Nexus Release Repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
+	<ciManagement>
+		<system>travis-ci</system>
+		<url>https://travis-ci.org/astrapi69/jetty-runner</url>
+	</ciManagement>
+
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/astrapi69/jetty-runner/issues</url>
+	</issueManagement>
 
 	<modules>
 		<module>wicket-jetty9-runner</module>
