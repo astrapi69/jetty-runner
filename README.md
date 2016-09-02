@@ -2,6 +2,10 @@
 
 The jetty-runner project provides method that can start programmatically the jetty server.
 
+## License
+
+The source code is released under the liberal Apache License V2.0.
+
 # Build Status 
 [![Build Status](https://travis-ci.org/astrapi69/jetty-runner.svg?branch=master)](https://travis-ci.org/astrapi69/jetty-runner)
 
@@ -49,9 +53,21 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 		</dependency>
 ```
 
-## License
+## Want to Help and improve it? ###
 
-The source code comes under the liberal Apache License V2.0, making mvn-parent-projects great for all types of  applications.
+The source code for jetty-runner are on GitHub. Please feel free to fork and send pull requests!
+
+Create your own fork of [astrapi69/jetty-runner/fork](https://github.com/astrapi69/jetty-runner/fork)
+
+To share your changes, [submit a pull request](https://github.com/astrapi69/jetty-runner/pull/new/master).
+
+Don't forget to add new units tests on your changes.
+
+## Contacting the Developer
+
+Do not hesitate to contact the jetty-runner developers with your questions, concerns, comments, bug reports, or feature requests.
+- Feature requests, questions and bug reports can be reported at the [issues page](https://github.com/astrapi69/jetty-runner/issues).
+
 
 # Donate
 
