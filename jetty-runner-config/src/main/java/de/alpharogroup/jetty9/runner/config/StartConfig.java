@@ -53,4 +53,10 @@ public class StartConfig
 	/** The context path. */
 	private String contextPath;
 
+	/** The http port. */
+	private int httpPort;
+
+	/** The https port. */
+	private int httpsPort;
+
 }
