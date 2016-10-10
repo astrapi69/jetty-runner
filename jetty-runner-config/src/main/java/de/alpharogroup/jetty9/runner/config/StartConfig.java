@@ -38,6 +38,12 @@ public class StartConfig
 	/** The project directory. */
 	private File projectDirectory;
 
+	/** The log file. */
+	private File logFile;
+
+	/** The absolute path from logfile. */
+	private String absolutePathFromLogfile;
+
 	/** The webapp. */
 	private File webapp;
 
