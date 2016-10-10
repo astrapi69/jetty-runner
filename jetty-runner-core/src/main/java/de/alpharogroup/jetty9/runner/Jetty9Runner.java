@@ -2,10 +2,13 @@ package de.alpharogroup.jetty9.runner;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.management.ManagementFactory;
 
 import javax.management.MBeanServer;
 
+import org.apache.log4j.Logger;
+import org.eclipse.jetty.deploy.DeploymentManager;
 import org.eclipse.jetty.jmx.MBeanContainer;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.HttpConfiguration;
@@ -22,8 +25,10 @@ import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.webapp.WebAppContext;
 
+import de.alpharogroup.file.delete.DeleteFileExtensions;
 import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.jetty9.runner.config.Jetty9RunConfiguration;
+import de.alpharogroup.jetty9.runner.config.StartConfig;
 
 /**
  * The Class {@link Jetty9Runner}.
@@ -133,7 +138,7 @@ public class Jetty9Runner
 			config.setContexts(new ContextHandlerCollection());
 		}
 		config.getHandlers()
-			.setHandlers(new Handler[] { config.getContexts(), new DefaultHandler() });
+		.setHandlers(new Handler[] { config.getContexts(), new DefaultHandler() });
 
 		server.setHandler(config.getHandlers());
 
@@ -181,8 +186,8 @@ public class Jetty9Runner
 	{
 		run(server,
 			Jetty9RunConfiguration.builder().servletContextHandler(servletContextHandler)
-				.httpPort(httpPort).httpsPort(httpsPort).keyStorePassword(keyStorePassword)
-				.keyStorePathResource(keyStorePathResource).build());
+			.httpPort(httpPort).httpsPort(httpsPort).keyStorePassword(keyStorePassword)
+			.keyStorePathResource(keyStorePathResource).build());
 	}
 
 	/**
@@ -319,5 +324,75 @@ public class Jetty9Runner
 	{
 		final Server server = new Server();
 		run(server, servletContextHandler, httpPort, httpsPort, keyStorePassword, "/keystore");
+	}
+
+	/**
+	 * Factory method for create the {@link Jetty9RunConfiguration} and set the ports from the
+	 * config file or take the default if in config file is not set.
+	 *
+	 * @param servletContextHandler the servlet context handler
+	 * @param contexts the contexts
+	 * @param deployer the deployer
+	 * @param startConfig the start config
+	 * @return the new {@link Jetty9RunConfiguration}.
+	 */
+	public static Jetty9RunConfiguration newJetty9RunConfiguration(
+		final ServletContextHandler servletContextHandler, final ContextHandlerCollection contexts,
+		final DeploymentManager deployer, final StartConfig startConfig)
+	{
+		final Jetty9RunConfiguration configuration = Jetty9RunConfiguration.builder()
+			.servletContextHandler(servletContextHandler)
+			.contexts(contexts)
+			.deployer(deployer)
+			.httpPort(startConfig.getHttpPort())
+			.httpsPort(startConfig.getHttpsPort()).keyStorePassword(startConfig.getKeyStorePassword())
+			.keyStorePathResource(startConfig.getKeyStorePathResource()).build();
+		return configuration;
+	}
+
+	/**
+	 * Gets the webapp directory.
+	 *
+	 * @param projectDirectory the project directory
+	 * @param projectName the project name
+	 * @return the webapp directory
+	 */
+	public static File getWebappDirectory(final File projectDirectory, final String projectName)
+	{
+		final File webapp;
+		if (projectDirectory.getAbsolutePath().endsWith(projectName))
+		{
+			webapp = PathFinder.getRelativePath(projectDirectory, "src", "main", "webapp");
+		}
+		else
+		{
+			webapp = PathFinder.getRelativePath(projectDirectory, projectName, "src", "main",
+				"webapp");
+		}
+		return webapp;
+	}
+
+	/**
+	 * Gets the log file.
+	 *
+	 * @param projectDirectory the project directory
+	 * @param logFileName the log file name
+	 * @return the log file
+	 */
+	public static File getLogFile(final File projectDirectory, final String logFileName)
+	{
+		final File logfile = new File(projectDirectory, logFileName);
+		if (logfile.exists())
+		{
+			try
+			{
+				DeleteFileExtensions.delete(logfile);
+			}
+			catch (final IOException e)
+			{
+				Logger.getRootLogger().error("logfile could not deleted.", e);
+			}
+		}
+		return logfile;
 	}
 }
