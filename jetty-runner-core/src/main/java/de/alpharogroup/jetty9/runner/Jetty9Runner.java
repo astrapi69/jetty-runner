@@ -29,6 +29,7 @@ import de.alpharogroup.file.delete.DeleteFileExtensions;
 import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.jetty9.runner.config.Jetty9RunConfiguration;
 import de.alpharogroup.jetty9.runner.config.StartConfig;
+import de.alpharogroup.log.LoggerExtensions;
 
 /**
  * The Class {@link Jetty9Runner}.
@@ -394,5 +395,30 @@ public class Jetty9Runner
 			}
 		}
 		return logfile;
+	}
+
+
+	/**
+	 * Run a jetty server with the given {@link StartConfig} object on the given {@link Server}
+	 * object.
+	 *
+	 * @param startConfig
+	 *            the start config
+	 * @param server
+	 *            the server
+	 */
+	public static void run(final StartConfig startConfig, final Server server)
+	{
+		if (startConfig.getLogFile().exists()) {
+			try {
+				DeleteFileExtensions.delete(startConfig.getLogFile());
+			} catch (final IOException e) {
+				Logger.getRootLogger().error("logfile could not deleted.", e);
+			}
+		}
+		// Add a file appender to the logger programatically
+		LoggerExtensions.addFileAppender(Logger.getRootLogger(),
+			LoggerExtensions.newFileAppender(startConfig.getAbsolutePathFromLogfile()));
+
 	}
 }

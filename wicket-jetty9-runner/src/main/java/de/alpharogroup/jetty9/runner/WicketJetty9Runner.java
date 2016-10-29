@@ -16,6 +16,7 @@
 package de.alpharogroup.jetty9.runner;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.Application;
@@ -27,6 +28,7 @@ import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
+import de.alpharogroup.file.delete.DeleteFileExtensions;
 import de.alpharogroup.jetty9.runner.config.FilterHolderConfiguration;
 import de.alpharogroup.jetty9.runner.config.Jetty9RunConfiguration;
 import de.alpharogroup.jetty9.runner.config.ServletContextHandlerConfiguration;
@@ -111,6 +113,13 @@ public class WicketJetty9Runner
 
 		System.setProperty(WICKET_CONFIGURATION_KEY, startConfig.getRuntimeConfigurationType());
 
+		if (startConfig.getLogFile().exists()) {
+			try {
+				DeleteFileExtensions.delete(startConfig.getLogFile());
+			} catch (final IOException e) {
+				Logger.getRootLogger().error("logfile could not deleted.", e);
+			}
+		}
 		// Add a file appender to the logger programatically
 		LoggerExtensions.addFileAppender(Logger.getRootLogger(),
 			LoggerExtensions.newFileAppender(startConfig.getAbsolutePathFromLogfile()));
