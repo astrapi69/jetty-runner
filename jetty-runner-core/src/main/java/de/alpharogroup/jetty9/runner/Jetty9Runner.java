@@ -9,6 +9,7 @@ import javax.management.MBeanServer;
 
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.deploy.DeploymentManager;
+import org.eclipse.jetty.http.HttpVersion;
 import org.eclipse.jetty.jmx.MBeanContainer;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.HttpConfiguration;
@@ -29,6 +30,7 @@ import de.alpharogroup.file.delete.DeleteFileExtensions;
 import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.jetty9.runner.config.Jetty9RunConfiguration;
 import de.alpharogroup.jetty9.runner.config.StartConfig;
+import de.alpharogroup.jetty9.runner.factories.ConfigurationFactory;
 import de.alpharogroup.log.LoggerExtensions;
 
 /**
@@ -79,10 +81,9 @@ public class Jetty9Runner
 	 */
 	public static void run(final Server server, final Jetty9RunConfiguration config)
 	{
-		final HttpConfiguration http_config = new HttpConfiguration();
-		http_config.setSecureScheme("https");
-		http_config.setSecurePort(config.getHttpsPort());
-		http_config.setOutputBufferSize(32768);
+		final HttpConfiguration http_config =
+			ConfigurationFactory
+				.newHttpConfiguration("https", config.getHttpsPort(), 32768);
 
 		final ServerConnector http = new ServerConnector(server,
 			new HttpConnectionFactory(http_config));
@@ -113,7 +114,7 @@ public class Jetty9Runner
 				https_config.addCustomizer(new SecureRequestCustomizer());
 
 				final ServerConnector https = new ServerConnector(server,
-					new SslConnectionFactory(sslContextFactory, "http/1.1"),
+					new SslConnectionFactory(sslContextFactory, HttpVersion.HTTP_1_1.asString()),
 					new HttpConnectionFactory(https_config))
 				{
 
