@@ -2,8 +2,10 @@ package de.alpharogroup.jetty9.runner.factories;
 
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
+import org.eclipse.jetty.server.SecureRequestCustomizer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.SslConnectionFactory;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 
@@ -14,8 +16,8 @@ public class ConfigurationFactory
 {
 
 	/**
-	 * Factory method for creating a new {@link HttpConfiguration} from the given parameters. The default scheme for http is
-	 * <code>http</code>.
+	 * Factory method for creating a new {@link HttpConfiguration} from the given parameters. The
+	 * default scheme for http is <code>http</code>.
 	 *
 	 * @param secureScheme
 	 *            the secure scheme
@@ -77,21 +79,71 @@ public class ConfigurationFactory
 		return sslContextFactory;
 	}
 
-
 	/**
 	 * Factory method for creating a new {@link ServerConnector} from the given parameters.
 	 *
-	 * @param server the server
-	 * @param httpConfiguration the http configuration
-	 * @param port the port
-	 * @param idleTimeout the idle timeout
+	 * @param server
+	 *            the server
+	 * @param httpConfiguration
+	 *            the http configuration
+	 * @param port
+	 *            the port
+	 * @param idleTimeout
+	 *            the idle timeout
 	 * @return the new {@link ServerConnector}.
 	 */
-	public static ServerConnector newServerConnector(final Server server, final HttpConfiguration httpConfiguration, final int port, final long idleTimeout) {
+	public static ServerConnector newServerConnector(final Server server,
+		final HttpConfiguration httpConfiguration, final int port, final long idleTimeout)
+	{
 		final ServerConnector serverConnector = new ServerConnector(server,
 			new HttpConnectionFactory(httpConfiguration));
 		serverConnector.setPort(port);
 		serverConnector.setIdleTimeout(idleTimeout);
 		return serverConnector;
 	}
+
+	/**
+	 * Factory method for creating a new {@link ServerConnector} from the given parameters.
+	 *
+	 * @param server
+	 *            the server
+	 * @param sslConnectionFactory
+	 *            the ssl connection factory
+	 * @param httpConfiguration
+	 *            the http configuration
+	 * @param port
+	 *            the port
+	 * @param idleTimeout
+	 *            the idle timeout
+	 * @return the new {@link ServerConnector}.
+	 */
+	public static ServerConnector newServerConnector(final Server server,
+		final SslConnectionFactory sslConnectionFactory, final HttpConfiguration httpConfiguration,
+		final int port, final long idleTimeout)
+	{
+		final ServerConnector serverConnector = new ServerConnector(server, sslConnectionFactory,
+			new HttpConnectionFactory(httpConfiguration));
+		serverConnector.setPort(port);
+		serverConnector.setIdleTimeout(idleTimeout);
+		return serverConnector;
+	}
+
+	/**
+	 * Factory method for creating a new {@link SecureRequestCustomizer} from the given parameters.
+	 *
+	 * @param stsMaxAgeSeconds
+	 *            the sts max age seconds
+	 * @param stsIncludeSubDomains
+	 *            the sts include sub domains
+	 * @return the new {@link SecureRequestCustomizer}.
+	 */
+	public static SecureRequestCustomizer newSecureRequestCustomizer(final long stsMaxAgeSeconds,
+		final boolean stsIncludeSubDomains)
+	{
+		final SecureRequestCustomizer src = new SecureRequestCustomizer();
+		src.setStsMaxAge(stsMaxAgeSeconds);
+		src.setStsIncludeSubDomains(stsIncludeSubDomains);
+		return src;
+	}
+
 }
