@@ -85,10 +85,9 @@ public class Jetty9Runner
 			ConfigurationFactory
 				.newHttpConfiguration("https", config.getHttpsPort(), 32768);
 
-		final ServerConnector http = new ServerConnector(server,
-			new HttpConnectionFactory(http_config));
-		http.setPort(config.getHttpPort());
-		http.setIdleTimeout(1000 * 60 * 60);
+		final ServerConnector http =
+			ConfigurationFactory
+				.newServerConnector(server, http_config, config.getHttpPort(), (1000 * 60 * 60));
 
 		server.addConnector(http);
 		if ((config.getKeyStorePathResource() != null)
@@ -105,24 +104,21 @@ public class Jetty9Runner
 				// use this certificate anywhere important as the passwords are
 				// available in the source.
 
-				final SslContextFactory sslContextFactory = new SslContextFactory();
-				sslContextFactory.setKeyStoreResource(keystore);
-				sslContextFactory.setKeyStorePassword(config.getKeyStorePassword());
-				sslContextFactory.setKeyManagerPassword(config.getKeyStorePassword());
+				final SslContextFactory sslContextFactory =
+					ConfigurationFactory
+						.newSslContextFactory(keystore, config.getKeyStorePassword(), config.getKeyStorePassword());
+
 
 				final HttpConfiguration https_config = new HttpConfiguration(http_config);
 				https_config.addCustomizer(new SecureRequestCustomizer());
 
-				final ServerConnector https = new ServerConnector(server,
-					new SslConnectionFactory(sslContextFactory, HttpVersion.HTTP_1_1.asString()),
-					new HttpConnectionFactory(https_config))
-				{
-
-				};
-				https.setPort(config.getHttpsPort());
-				https.setIdleTimeout(500000);
+				final ServerConnector https = ConfigurationFactory
+					.newServerConnector(server,
+						new SslConnectionFactory(sslContextFactory, HttpVersion.HTTP_1_1.asString()),
+						https_config, config.getHttpsPort(), 500000);
 
 				server.addConnector(https);
+
 				System.out.println(
 					"SSL access to the examples has been enabled on port " + config.getHttpsPort());
 				System.out.println("You can access the application using SSL on https://localhost:"
