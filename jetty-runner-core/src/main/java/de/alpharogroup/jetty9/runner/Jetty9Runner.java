@@ -9,6 +9,7 @@ import javax.management.MBeanServer;
 
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.deploy.DeploymentManager;
+import org.eclipse.jetty.http.HttpVersion;
 import org.eclipse.jetty.jmx.MBeanContainer;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.HttpConfiguration;
@@ -29,6 +30,8 @@ import de.alpharogroup.file.delete.DeleteFileExtensions;
 import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.jetty9.runner.config.Jetty9RunConfiguration;
 import de.alpharogroup.jetty9.runner.config.StartConfig;
+import de.alpharogroup.jetty9.runner.factories.ConfigurationFactory;
+import de.alpharogroup.log.LoggerExtensions;
 
 /**
  * The Class {@link Jetty9Runner}.
@@ -78,15 +81,13 @@ public class Jetty9Runner
 	 */
 	public static void run(final Server server, final Jetty9RunConfiguration config)
 	{
-		final HttpConfiguration http_config = new HttpConfiguration();
-		http_config.setSecureScheme("https");
-		http_config.setSecurePort(config.getHttpsPort());
-		http_config.setOutputBufferSize(32768);
+		final HttpConfiguration http_config =
+			ConfigurationFactory
+				.newHttpConfiguration("https", config.getHttpsPort(), 32768);
 
-		final ServerConnector http = new ServerConnector(server,
-			new HttpConnectionFactory(http_config));
-		http.setPort(config.getHttpPort());
-		http.setIdleTimeout(1000 * 60 * 60);
+		final ServerConnector http =
+			ConfigurationFactory
+				.newServerConnector(server, http_config, config.getHttpPort(), (1000 * 60 * 60));
 
 		server.addConnector(http);
 		if ((config.getKeyStorePathResource() != null)
@@ -103,24 +104,21 @@ public class Jetty9Runner
 				// use this certificate anywhere important as the passwords are
 				// available in the source.
 
-				final SslContextFactory sslContextFactory = new SslContextFactory();
-				sslContextFactory.setKeyStoreResource(keystore);
-				sslContextFactory.setKeyStorePassword(config.getKeyStorePassword());
-				sslContextFactory.setKeyManagerPassword(config.getKeyStorePassword());
+				final SslContextFactory sslContextFactory =
+					ConfigurationFactory
+						.newSslContextFactory(keystore, config.getKeyStorePassword(), config.getKeyStorePassword());
+
 
 				final HttpConfiguration https_config = new HttpConfiguration(http_config);
 				https_config.addCustomizer(new SecureRequestCustomizer());
 
-				final ServerConnector https = new ServerConnector(server,
-					new SslConnectionFactory(sslContextFactory, "http/1.1"),
-					new HttpConnectionFactory(https_config))
-				{
-
-				};
-				https.setPort(config.getHttpsPort());
-				https.setIdleTimeout(500000);
+				final ServerConnector https = ConfigurationFactory
+					.newServerConnector(server,
+						new SslConnectionFactory(sslContextFactory, HttpVersion.HTTP_1_1.asString()),
+						https_config, config.getHttpsPort(), 500000);
 
 				server.addConnector(https);
+
 				System.out.println(
 					"SSL access to the examples has been enabled on port " + config.getHttpsPort());
 				System.out.println("You can access the application using SSL on https://localhost:"
@@ -394,5 +392,30 @@ public class Jetty9Runner
 			}
 		}
 		return logfile;
+	}
+
+
+	/**
+	 * Run a jetty server with the given {@link StartConfig} object on the given {@link Server}
+	 * object.
+	 *
+	 * @param startConfig
+	 *            the start config
+	 * @param server
+	 *            the server
+	 */
+	public static void run(final StartConfig startConfig, final Server server)
+	{
+		if (startConfig.getLogFile().exists()) {
+			try {
+				DeleteFileExtensions.delete(startConfig.getLogFile());
+			} catch (final IOException e) {
+				Logger.getRootLogger().error("logfile could not deleted.", e);
+			}
+		}
+		// Add a file appender to the logger programatically
+		LoggerExtensions.addFileAppender(Logger.getRootLogger(),
+			LoggerExtensions.newFileAppender(startConfig.getAbsolutePathFromLogfile()));
+
 	}
 }
