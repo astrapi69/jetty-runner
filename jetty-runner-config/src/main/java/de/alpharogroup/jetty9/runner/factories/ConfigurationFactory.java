@@ -1,6 +1,9 @@
 package de.alpharogroup.jetty9.runner.factories;
 
 import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 
@@ -72,5 +75,23 @@ public class ConfigurationFactory
 		sslContextFactory.setKeyStorePassword(keyStorePassword);
 		sslContextFactory.setKeyManagerPassword(keyManagerPassword);
 		return sslContextFactory;
+	}
+
+
+	/**
+	 * Factory method for creating a new {@link ServerConnector} from the given parameters.
+	 *
+	 * @param server the server
+	 * @param httpConfiguration the http configuration
+	 * @param port the port
+	 * @param idleTimeout the idle timeout
+	 * @return the new {@link ServerConnector}.
+	 */
+	public static ServerConnector newServerConnector(final Server server, final HttpConfiguration httpConfiguration, final int port, final long idleTimeout) {
+		final ServerConnector serverConnector = new ServerConnector(server,
+			new HttpConnectionFactory(httpConfiguration));
+		serverConnector.setPort(port);
+		serverConnector.setIdleTimeout(idleTimeout);
+		return serverConnector;
 	}
 }
