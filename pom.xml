@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-java-parent</artifactId>
-		<version>2.17.0</version>
+		<version>2.22.0</version>
 		<relativePath></relativePath>
 	</parent>
 
 	<artifactId>jetty-runner</artifactId>
-	<version>3.9.0</version>
+	<version>3.10.0</version>
 	<inceptionYear>2015</inceptionYear>
 	<packaging>pom</packaging>
 	<name>jetty-runner</name>
@@ -87,10 +87,10 @@
 
 	<properties>
 		<!-- JETTY 9 version -->
-		<jetty9.version>9.4.0.M1</jetty9.version>
+		<jetty9.version>9.4.0.RC3</jetty9.version>
 		<!-- APACHE COMMONS LIBRARIES versions -->
 		<commons-collections4.version>4.1</commons-collections4.version>
-		<commons-lang3.version>3.4</commons-lang3.version>
+		<commons-lang3.version>3.5</commons-lang3.version>
 		<!-- NEW EXTENSIONS LIB versions -->
 		<extensions-lib.version>4.14.0</extensions-lib.version>
 		<file-worker.version>${extensions-lib.version}</file-worker.version>
