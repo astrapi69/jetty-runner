@@ -53,6 +53,7 @@ import de.alpharogroup.log.LoggerExtensions;
  */
 public class Jetty9Runner
 {
+	public static final String HTTPS = "https";
 	/** The Constant logger. */
 	private static final Logger logger = Logger.getLogger(Jetty9Runner.class.getName());
 
@@ -98,16 +99,15 @@ public class Jetty9Runner
 	 */
 	public static void run(final Server server, final Jetty9RunConfiguration config)
 	{
-		final HttpConfiguration http_config =
+		final HttpConfiguration httpsConfiguration =
 			ConfigurationFactory
-				.newHttpConfiguration("https", config.getHttpsPort(), 32768);
+				.newHttpConfiguration(HTTPS, config.getHttpsPort(), 32768);
 
 		final ServerConnector http =
 			ConfigurationFactory
-				.newServerConnector(server, http_config, config.getHttpPort(), (1000 * 60 * 60));
+				.newServerConnector(server, httpsConfiguration, config.getHttpPort(), (1000 * 60 * 60));
 
 		server.addConnector(http);
-		final Logger logger = Logger.getRootLogger();
 		if ((config.getKeyStorePathResource() != null)
 			&& !config.getKeyStorePathResource().isEmpty())
 		{
@@ -127,20 +127,20 @@ public class Jetty9Runner
 						.newSslContextFactory(keystore, config.getKeyStorePassword(), config.getKeyStorePassword());
 
 
-				final HttpConfiguration https_config = new HttpConfiguration(http_config);
-				https_config.addCustomizer(new SecureRequestCustomizer());
+				final HttpConfiguration httpsConfig = new HttpConfiguration(httpsConfiguration);
+				httpsConfig.addCustomizer(new SecureRequestCustomizer());
 
 				final ServerConnector https = ConfigurationFactory
 					.newServerConnector(server,
 						new SslConnectionFactory(sslContextFactory, HttpVersion.HTTP_1_1.asString()),
-						https_config, config.getHttpsPort(), 500000);
+						httpsConfig, config.getHttpsPort(), 500000);
 
 				server.addConnector(https);
 
 				logger.info("***************************************************************************");
 				logger.info("**  SSL access to the application has been enabled on port " + config.getHttpsPort() + ".         **");
 				logger.info("**  You can access the application using SSL on https://localhost:" + config.getHttpsPort() + ".  **");
-				logger.info("********************************************************************");
+				logger.info("***************************************************************************");
 
 			} else {
 				logger.error("*****************************************************");
@@ -245,7 +245,7 @@ public class Jetty9Runner
 		final Jetty9RunConfiguration config)
 	{
 		final HttpConfiguration http_config = new HttpConfiguration();
-		http_config.setSecureScheme("https");
+		http_config.setSecureScheme(HTTPS);
 		http_config.setSecurePort(config.getHttpsPort());
 		http_config.setOutputBufferSize(32768);
 
@@ -291,7 +291,7 @@ public class Jetty9Runner
 				logger.info("***************************************************************************");
 				logger.info("**  SSL access to the application has been enabled on port " + config.getHttpsPort() + ".         **");
 				logger.info("**  You can access the application using SSL on https://localhost:" + config.getHttpsPort() + ".  **");
-				logger.info("********************************************************************");
+				logger.info("***************************************************************************");
 
 			} else {
 				logger.error("*****************************************************");
