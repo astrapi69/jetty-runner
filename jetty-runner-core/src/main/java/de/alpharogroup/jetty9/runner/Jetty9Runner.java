@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2015 Asterios Raptis
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package de.alpharogroup.jetty9.runner;
 
 
@@ -38,6 +53,8 @@ import de.alpharogroup.log.LoggerExtensions;
  */
 public class Jetty9Runner
 {
+	/** The Constant logger. */
+	private static final Logger logger = Logger.getLogger(Jetty9Runner.class.getName());
 
 	/**
 	 * Gets the web app context.
@@ -90,6 +107,7 @@ public class Jetty9Runner
 				.newServerConnector(server, http_config, config.getHttpPort(), (1000 * 60 * 60));
 
 		server.addConnector(http);
+		final Logger logger = Logger.getRootLogger();
 		if ((config.getKeyStorePathResource() != null)
 			&& !config.getKeyStorePathResource().isEmpty())
 		{
@@ -119,12 +137,20 @@ public class Jetty9Runner
 
 				server.addConnector(https);
 
-				System.out.println(
-					"SSL access to the examples has been enabled on port " + config.getHttpsPort());
-				System.out.println("You can access the application using SSL on https://localhost:"
-					+ config.getHttpsPort());
-				System.out.println();
+				logger.info("***************************************************************************");
+				logger.info("**  SSL access to the application has been enabled on port " + config.getHttpsPort() + ".         **");
+				logger.info("**  You can access the application using SSL on https://localhost:" + config.getHttpsPort() + ".  **");
+				logger.info("********************************************************************");
+
+			} else {
+				logger.error("*****************************************************");
+				logger.error("**  Keystore is null. Provide a keystore for ssh.  **");
+				logger.error("*****************************************************");
 			}
+		} else {
+			logger.info("***************************************************");
+			logger.info("**  Keystore path is null. You can not use ssh.  **");
+			logger.info("***************************************************");
 		}
 
 		if (config.getHandlers() == null)
@@ -261,12 +287,21 @@ public class Jetty9Runner
 				https.setIdleTimeout(500000);
 
 				server.addConnector(https);
-				System.out.println(
-					"SSL access to the examples has been enabled on port " + config.getHttpsPort());
-				System.out.println("You can access the application using SSL on https://localhost:"
-					+ config.getHttpsPort());
-				System.out.println();
+
+				logger.info("***************************************************************************");
+				logger.info("**  SSL access to the application has been enabled on port " + config.getHttpsPort() + ".         **");
+				logger.info("**  You can access the application using SSL on https://localhost:" + config.getHttpsPort() + ".  **");
+				logger.info("********************************************************************");
+
+			} else {
+				logger.error("*****************************************************");
+				logger.error("**  Keystore is null. Provide a keystore for ssh.  **");
+				logger.error("*****************************************************");
 			}
+		} else {
+			logger.info("***************************************************");
+			logger.info("**  Keystore path is null. You can not use ssh.  **");
+			logger.info("***************************************************");
 		}
 
 
