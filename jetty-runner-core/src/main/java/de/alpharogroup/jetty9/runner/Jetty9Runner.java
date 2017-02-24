@@ -140,7 +140,7 @@ public class Jetty9Runner
 				logger.info("***************************************************************************");
 				logger.info("**  SSL access to the application has been enabled on port " + config.getHttpsPort() + ".         **");
 				logger.info("**  You can access the application using SSL on https://localhost:" + config.getHttpsPort() + ".  **");
-				logger.info("********************************************************************");
+				logger.info("***************************************************************************");
 
 			} else {
 				logger.error("*****************************************************");
@@ -291,7 +291,7 @@ public class Jetty9Runner
 				logger.info("***************************************************************************");
 				logger.info("**  SSL access to the application has been enabled on port " + config.getHttpsPort() + ".         **");
 				logger.info("**  You can access the application using SSL on https://localhost:" + config.getHttpsPort() + ".  **");
-				logger.info("********************************************************************");
+				logger.info("***************************************************************************");
 
 			} else {
 				logger.error("*****************************************************");
