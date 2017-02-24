@@ -87,7 +87,7 @@
 
 	<properties>
 		<!-- JETTY 9 version -->
-		<jetty9.version>9.4.0.RC3</jetty9.version>
+		<jetty9.version>9.4.0.v20161208</jetty9.version>
 		<!-- APACHE COMMONS LIBRARIES versions -->
 		<commons-collections4.version>4.1</commons-collections4.version>
 		<commons-lang3.version>3.5</commons-lang3.version>
