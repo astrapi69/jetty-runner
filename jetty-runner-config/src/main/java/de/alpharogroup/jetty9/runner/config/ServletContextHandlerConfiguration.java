@@ -19,6 +19,8 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.jetty.server.HandlerContainer;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -27,8 +29,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Singular;
 import lombok.ToString;
-
-import org.eclipse.jetty.server.HandlerContainer;
 
 /**
  * ServletContextHandler configuration.
@@ -42,7 +42,7 @@ import org.eclipse.jetty.server.HandlerContainer;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder 
+@Builder
 public class ServletContextHandlerConfiguration
 {
 

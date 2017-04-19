@@ -58,6 +58,32 @@ public class Jetty9Runner
 	private static final Logger logger = Logger.getLogger(Jetty9Runner.class.getName());
 
 	/**
+	 * Gets the log file.
+	 *
+	 * @param projectDirectory
+	 *            the project directory
+	 * @param logFileName
+	 *            the log file name
+	 * @return the log file
+	 */
+	public static File getLogFile(final File projectDirectory, final String logFileName)
+	{
+		final File logfile = new File(projectDirectory, logFileName);
+		if (logfile.exists())
+		{
+			try
+			{
+				DeleteFileExtensions.delete(logfile);
+			}
+			catch (final IOException e)
+			{
+				Logger.getRootLogger().error("logfile could not deleted.", e);
+			}
+		}
+		return logfile;
+	}
+
+	/**
 	 * Gets the web app context.
 	 *
 	 * @param server
@@ -75,6 +101,56 @@ public class Jetty9Runner
 		webAppContext.setContextPath("/");
 		webAppContext.setWar(wa.getAbsolutePath());
 		return webAppContext;
+	}
+
+	/**
+	 * Gets the webapp directory.
+	 *
+	 * @param projectDirectory
+	 *            the project directory
+	 * @param projectName
+	 *            the project name
+	 * @return the webapp directory
+	 */
+	public static File getWebappDirectory(final File projectDirectory, final String projectName)
+	{
+		final File webapp;
+		if (projectDirectory.getAbsolutePath().endsWith(projectName))
+		{
+			webapp = PathFinder.getRelativePath(projectDirectory, "src", "main", "webapp");
+		}
+		else
+		{
+			webapp = PathFinder.getRelativePath(projectDirectory, projectName, "src", "main",
+				"webapp");
+		}
+		return webapp;
+	}
+
+	/**
+	 * Factory method for create the {@link Jetty9RunConfiguration} and set the ports from the
+	 * config file or take the default if in config file is not set.
+	 *
+	 * @param servletContextHandler
+	 *            the servlet context handler
+	 * @param contexts
+	 *            the contexts
+	 * @param deployer
+	 *            the deployer
+	 * @param startConfig
+	 *            the start config
+	 * @return the new {@link Jetty9RunConfiguration}.
+	 */
+	public static Jetty9RunConfiguration newJetty9RunConfiguration(
+		final ServletContextHandler servletContextHandler, final ContextHandlerCollection contexts,
+		final DeploymentManager deployer, final StartConfig startConfig)
+	{
+		final Jetty9RunConfiguration configuration = Jetty9RunConfiguration.builder()
+			.servletContextHandler(servletContextHandler).contexts(contexts).deployer(deployer)
+			.httpPort(startConfig.getHttpPort()).httpsPort(startConfig.getHttpsPort())
+			.keyStorePassword(startConfig.getKeyStorePassword())
+			.keyStorePathResource(startConfig.getKeyStorePathResource()).build();
+		return configuration;
 	}
 
 	/**
@@ -99,13 +175,11 @@ public class Jetty9Runner
 	 */
 	public static void run(final Server server, final Jetty9RunConfiguration config)
 	{
-		final HttpConfiguration httpsConfiguration =
-			ConfigurationFactory
-				.newHttpConfiguration(HTTPS, config.getHttpsPort(), 32768);
+		final HttpConfiguration httpsConfiguration = ConfigurationFactory
+			.newHttpConfiguration(HTTPS, config.getHttpsPort(), 32768);
 
-		final ServerConnector http =
-			ConfigurationFactory
-				.newServerConnector(server, httpsConfiguration, config.getHttpPort(), (1000 * 60 * 60));
+		final ServerConnector http = ConfigurationFactory.newServerConnector(server,
+			httpsConfiguration, config.getHttpPort(), (1000 * 60 * 60));
 
 		server.addConnector(http);
 		if ((config.getKeyStorePathResource() != null)
@@ -122,32 +196,39 @@ public class Jetty9Runner
 				// use this certificate anywhere important as the passwords are
 				// available in the source.
 
-				final SslContextFactory sslContextFactory =
-					ConfigurationFactory
-						.newSslContextFactory(keystore, config.getKeyStorePassword(), config.getKeyStorePassword());
+				final SslContextFactory sslContextFactory = ConfigurationFactory
+					.newSslContextFactory(keystore, config.getKeyStorePassword(),
+						config.getKeyStorePassword());
 
 
 				final HttpConfiguration httpsConfig = new HttpConfiguration(httpsConfiguration);
 				httpsConfig.addCustomizer(new SecureRequestCustomizer());
 
-				final ServerConnector https = ConfigurationFactory
-					.newServerConnector(server,
-						new SslConnectionFactory(sslContextFactory, HttpVersion.HTTP_1_1.asString()),
-						httpsConfig, config.getHttpsPort(), 500000);
+				final ServerConnector https = ConfigurationFactory.newServerConnector(server,
+					new SslConnectionFactory(sslContextFactory, HttpVersion.HTTP_1_1.asString()),
+					httpsConfig, config.getHttpsPort(), 500000);
 
 				server.addConnector(https);
 
-				logger.info("***************************************************************************");
-				logger.info("**  SSL access to the application has been enabled on port " + config.getHttpsPort() + ".         **");
-				logger.info("**  You can access the application using SSL on https://localhost:" + config.getHttpsPort() + ".  **");
-				logger.info("***************************************************************************");
+				logger.info(
+					"***************************************************************************");
+				logger.info("**  SSL access to the application has been enabled on port "
+					+ config.getHttpsPort() + ".         **");
+				logger.info("**  You can access the application using SSL on https://localhost:"
+					+ config.getHttpsPort() + ".  **");
+				logger.info(
+					"***************************************************************************");
 
-			} else {
+			}
+			else
+			{
 				logger.error("*****************************************************");
 				logger.error("**  Keystore is null. Provide a keystore for ssh.  **");
 				logger.error("*****************************************************");
 			}
-		} else {
+		}
+		else
+		{
 			logger.info("***************************************************");
 			logger.info("**  Keystore path is null. You can not use ssh.  **");
 			logger.info("***************************************************");
@@ -162,7 +243,7 @@ public class Jetty9Runner
 			config.setContexts(new ContextHandlerCollection());
 		}
 		config.getHandlers()
-		.setHandlers(new Handler[] { config.getContexts(), new DefaultHandler() });
+			.setHandlers(new Handler[] { config.getContexts(), new DefaultHandler() });
 
 		server.setHandler(config.getHandlers());
 
@@ -210,8 +291,8 @@ public class Jetty9Runner
 	{
 		run(server,
 			Jetty9RunConfiguration.builder().servletContextHandler(servletContextHandler)
-			.httpPort(httpPort).httpsPort(httpsPort).keyStorePassword(keyStorePassword)
-			.keyStorePathResource(keyStorePathResource).build());
+				.httpPort(httpPort).httpsPort(httpsPort).keyStorePassword(keyStorePassword)
+				.keyStorePathResource(keyStorePathResource).build());
 	}
 
 	/**
@@ -231,6 +312,34 @@ public class Jetty9Runner
 	{
 		final Server server = new Server();
 		run(server, servletContextHandler, httpPort, httpsPort, keyStorePassword, "/keystore");
+	}
+
+	/**
+	 * Run a jetty server with the given {@link StartConfig} object on the given {@link Server}
+	 * object.
+	 *
+	 * @param startConfig
+	 *            the start config
+	 * @param server
+	 *            the server
+	 */
+	public static void run(final StartConfig startConfig, final Server server)
+	{
+		if (startConfig.getLogFile().exists())
+		{
+			try
+			{
+				DeleteFileExtensions.delete(startConfig.getLogFile());
+			}
+			catch (final IOException e)
+			{
+				Logger.getRootLogger().error("logfile could not deleted.", e);
+			}
+		}
+		// Add a file appender to the logger programatically
+		LoggerExtensions.addFileAppender(Logger.getRootLogger(),
+			LoggerExtensions.newFileAppender(startConfig.getAbsolutePathFromLogfile()));
+
 	}
 
 	/**
@@ -288,17 +397,25 @@ public class Jetty9Runner
 
 				server.addConnector(https);
 
-				logger.info("***************************************************************************");
-				logger.info("**  SSL access to the application has been enabled on port " + config.getHttpsPort() + ".         **");
-				logger.info("**  You can access the application using SSL on https://localhost:" + config.getHttpsPort() + ".  **");
-				logger.info("***************************************************************************");
+				logger.info(
+					"***************************************************************************");
+				logger.info("**  SSL access to the application has been enabled on port "
+					+ config.getHttpsPort() + ".         **");
+				logger.info("**  You can access the application using SSL on https://localhost:"
+					+ config.getHttpsPort() + ".  **");
+				logger.info(
+					"***************************************************************************");
 
-			} else {
+			}
+			else
+			{
 				logger.error("*****************************************************");
 				logger.error("**  Keystore is null. Provide a keystore for ssh.  **");
 				logger.error("*****************************************************");
 			}
-		} else {
+		}
+		else
+		{
 			logger.info("***************************************************");
 			logger.info("**  Keystore path is null. You can not use ssh.  **");
 			logger.info("***************************************************");
@@ -340,6 +457,7 @@ public class Jetty9Runner
 		runWithNewServer(servletContextHandler, httpPort, httpsPort, "wicket");
 	}
 
+
 	/**
 	 * Run with new server.
 	 *
@@ -357,100 +475,5 @@ public class Jetty9Runner
 	{
 		final Server server = new Server();
 		run(server, servletContextHandler, httpPort, httpsPort, keyStorePassword, "/keystore");
-	}
-
-	/**
-	 * Factory method for create the {@link Jetty9RunConfiguration} and set the ports from the
-	 * config file or take the default if in config file is not set.
-	 *
-	 * @param servletContextHandler the servlet context handler
-	 * @param contexts the contexts
-	 * @param deployer the deployer
-	 * @param startConfig the start config
-	 * @return the new {@link Jetty9RunConfiguration}.
-	 */
-	public static Jetty9RunConfiguration newJetty9RunConfiguration(
-		final ServletContextHandler servletContextHandler, final ContextHandlerCollection contexts,
-		final DeploymentManager deployer, final StartConfig startConfig)
-	{
-		final Jetty9RunConfiguration configuration = Jetty9RunConfiguration.builder()
-			.servletContextHandler(servletContextHandler)
-			.contexts(contexts)
-			.deployer(deployer)
-			.httpPort(startConfig.getHttpPort())
-			.httpsPort(startConfig.getHttpsPort()).keyStorePassword(startConfig.getKeyStorePassword())
-			.keyStorePathResource(startConfig.getKeyStorePathResource()).build();
-		return configuration;
-	}
-
-	/**
-	 * Gets the webapp directory.
-	 *
-	 * @param projectDirectory the project directory
-	 * @param projectName the project name
-	 * @return the webapp directory
-	 */
-	public static File getWebappDirectory(final File projectDirectory, final String projectName)
-	{
-		final File webapp;
-		if (projectDirectory.getAbsolutePath().endsWith(projectName))
-		{
-			webapp = PathFinder.getRelativePath(projectDirectory, "src", "main", "webapp");
-		}
-		else
-		{
-			webapp = PathFinder.getRelativePath(projectDirectory, projectName, "src", "main",
-				"webapp");
-		}
-		return webapp;
-	}
-
-	/**
-	 * Gets the log file.
-	 *
-	 * @param projectDirectory the project directory
-	 * @param logFileName the log file name
-	 * @return the log file
-	 */
-	public static File getLogFile(final File projectDirectory, final String logFileName)
-	{
-		final File logfile = new File(projectDirectory, logFileName);
-		if (logfile.exists())
-		{
-			try
-			{
-				DeleteFileExtensions.delete(logfile);
-			}
-			catch (final IOException e)
-			{
-				Logger.getRootLogger().error("logfile could not deleted.", e);
-			}
-		}
-		return logfile;
-	}
-
-
-	/**
-	 * Run a jetty server with the given {@link StartConfig} object on the given {@link Server}
-	 * object.
-	 *
-	 * @param startConfig
-	 *            the start config
-	 * @param server
-	 *            the server
-	 */
-	public static void run(final StartConfig startConfig, final Server server)
-	{
-		if (startConfig.getLogFile().exists()) {
-			try {
-				DeleteFileExtensions.delete(startConfig.getLogFile());
-			} catch (final IOException e) {
-				Logger.getRootLogger().error("logfile could not deleted.", e);
-			}
-		}
-		// Add a file appender to the logger programatically
-		LoggerExtensions.addFileAppender(Logger.getRootLogger(),
-			LoggerExtensions.newFileAppender(startConfig.getAbsolutePathFromLogfile()));
-
 	}
 }
