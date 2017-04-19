@@ -113,10 +113,14 @@ public class WicketJetty9Runner
 
 		System.setProperty(WICKET_CONFIGURATION_KEY, startConfig.getRuntimeConfigurationType());
 
-		if (startConfig.getLogFile().exists()) {
-			try {
+		if (startConfig.getLogFile().exists())
+		{
+			try
+			{
 				DeleteFileExtensions.delete(startConfig.getLogFile());
-			} catch (final IOException e) {
+			}
+			catch (final IOException e)
+			{
 				Logger.getRootLogger().error("logfile could not deleted.", e);
 			}
 		}
@@ -137,7 +141,7 @@ public class WicketJetty9Runner
 					.build())
 				.servletHolderConfiguration(
 					ServletHolderConfiguration.builder().servletClass(DefaultServlet.class)
-					.pathSpec(startConfig.getFilterPath()).build())
+						.pathSpec(startConfig.getFilterPath()).build())
 				.contextPath(startConfig.getContextPath()).webapp(startConfig.getWebapp())
 				.maxInactiveInterval(startConfig.getSessionTimeout())
 				.filterPath(startConfig.getFilterPath()).build());
