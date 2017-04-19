@@ -36,7 +36,8 @@ import de.alpharogroup.jetty9.runner.config.ServletContextHandlerConfiguration;
 /**
  * A factory for creating ServletContextHandler objects.
  */
-public class WicketServletContextHandlerFactory {
+public class WicketServletContextHandlerFactory
+{
 
 	/**
 	 * New servlet context handler.
@@ -45,8 +46,11 @@ public class WicketServletContextHandlerFactory {
 	 *            the application class
 	 * @return the servlet context handler
 	 */
-	public static ServletContextHandler newServletContextHandler(final Class<? extends Application> applicationClass) {
-		return newServletContextHandler(applicationClass, "/", PathFinder.getSrcMainJavaDir(), 300, "/*");
+	public static ServletContextHandler newServletContextHandler(
+		final Class<? extends Application> applicationClass)
+	{
+		return newServletContextHandler(applicationClass, "/", PathFinder.getSrcMainJavaDir(), 300,
+			"/*");
 	}
 
 	/**
@@ -58,8 +62,9 @@ public class WicketServletContextHandlerFactory {
 	 *            the webapp
 	 * @return the servlet context handler
 	 */
-	public static ServletContextHandler newServletContextHandler(final Class<? extends Application> applicationClass,
-			final File webapp) {
+	public static ServletContextHandler newServletContextHandler(
+		final Class<? extends Application> applicationClass, final File webapp)
+	{
 		return newServletContextHandler(applicationClass, "/", webapp, 300, "/*");
 	}
 
@@ -81,9 +86,12 @@ public class WicketServletContextHandlerFactory {
 	 *             {@link WicketServletContextHandlerFactory#newWicketServletContextHandler(Class, String, File, int, String)}
 	 */
 	@Deprecated
-	public static ServletContextHandler newServletContextHandler(final Class<? extends Application> applicationClass,
-			final String contextPath, final File webapp, final int maxInactiveInterval, final String filterPath) {
-		return newWicketServletContextHandler(applicationClass, contextPath, webapp, maxInactiveInterval, filterPath);
+	public static ServletContextHandler newServletContextHandler(
+		final Class<? extends Application> applicationClass, final String contextPath,
+		final File webapp, final int maxInactiveInterval, final String filterPath)
+	{
+		return newWicketServletContextHandler(applicationClass, contextPath, webapp,
+			maxInactiveInterval, filterPath);
 	}
 
 	/**
@@ -97,7 +105,8 @@ public class WicketServletContextHandlerFactory {
 	 */
 	@Deprecated
 	public static ServletContextHandler newServletContextHandler(
-			final ServletContextHandlerConfiguration configuration) {
+		final ServletContextHandlerConfiguration configuration)
+	{
 		return newWicketServletContextHandler(configuration);
 	}
 
@@ -117,13 +126,16 @@ public class WicketServletContextHandlerFactory {
 	 * @return the servlet context handler
 	 */
 	public static ServletContextHandler newWicketServletContextHandler(
-			final Class<? extends Application> applicationClass, final String contextPath, final File webapp,
-			final int maxInactiveInterval, final String filterPath) {
+		final Class<? extends Application> applicationClass, final String contextPath,
+		final File webapp, final int maxInactiveInterval, final String filterPath)
+	{
 		final Map<String, String> initParameters = Generics.newHashMap();
 		initParameters.put(WicketFilter.FILTER_MAPPING_PARAM, filterPath);
-		return newServletContextHandler(ServletContextHandlerConfiguration.builder().applicationClass(applicationClass)
+		return newServletContextHandler(
+			ServletContextHandlerConfiguration.builder().applicationClass(applicationClass)
 				.contextPath(contextPath).webapp(webapp).maxInactiveInterval(maxInactiveInterval)
-				.initParameter(WicketFilter.FILTER_MAPPING_PARAM, filterPath).filterPath(filterPath).build());
+				.initParameter(WicketFilter.FILTER_MAPPING_PARAM, filterPath).filterPath(filterPath)
+				.build());
 	}
 
 	/**
@@ -134,11 +146,16 @@ public class WicketServletContextHandlerFactory {
 	 * @return the servlet context handler
 	 */
 	public static ServletContextHandler newWicketServletContextHandler(
-			final ServletContextHandlerConfiguration configuration) {
+		final ServletContextHandlerConfiguration configuration)
+	{
 		final ServletContextHandler context;
-		if (configuration.getParent() != null) {
-			context = new ServletContextHandler(configuration.getParent(), configuration.getContextPath());
-		} else {
+		if (configuration.getParent() != null)
+		{
+			context = new ServletContextHandler(configuration.getParent(),
+				configuration.getContextPath());
+		}
+		else
+		{
 			context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 		}
 		context.setContextPath(configuration.getContextPath());
@@ -147,12 +164,14 @@ public class WicketServletContextHandlerFactory {
 
 		final FilterHolder filter = new FilterHolder(WicketFilter.class);
 		filter.setInitParameter(ContextParamWebApplicationFactory.APP_CLASS_PARAM,
-				configuration.getApplicationClass().getName());
-		for (final Entry<String, String> initParameter : configuration.getInitParameters().entrySet()) {
+			configuration.getApplicationClass().getName());
+		for (final Entry<String, String> initParameter : configuration.getInitParameters()
+			.entrySet())
+		{
 			filter.setInitParameter(initParameter.getKey(), initParameter.getValue());
 		}
 		context.addFilter(filter, configuration.getFilterPath(),
-				EnumSet.of(DispatcherType.REQUEST, DispatcherType.ERROR));
+			EnumSet.of(DispatcherType.REQUEST, DispatcherType.ERROR));
 		context.addServlet(DefaultServlet.class, configuration.getFilterPath());
 
 		context.getSessionHandler().setMaxInactiveInterval(configuration.getMaxInactiveInterval());
