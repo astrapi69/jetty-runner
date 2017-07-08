@@ -4,11 +4,12 @@ The jetty-runner project provides method that can start programmatically the jet
 
 ## License
 
-The source code is released under the liberal Apache License V2.0.
+The source code is released under the liberal Apache License V2.0, making jetty-runner great for all types of java web applications.
 
 # Build Status 
 [![Build Status](https://travis-ci.org/astrapi69/jetty-runner.svg?branch=master)](https://travis-ci.org/astrapi69/jetty-runner)
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/jetty-runner/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/jetty-runner)
 
 ## Maven Central
 
@@ -16,24 +17,29 @@ Maven dependency is now on sonatype.
 
 Check out [sonatype repository](https://oss.sonatype.org/index.html#nexus-search;gav~de.alpharogroup~jetty-runner~~~) for latest snapshots and releases.
 
+Add the following maven dependencies to your project `pom.xml` if you want to import the core functionality:
 
-Add the following maven dependency to your project `pom.xml` if you want to import the core functionality of jcommons-lang:
+You can first define the version properties:
 
-Than you can add the dependency to your dependencies:
+	<properties>
+			...
+		<!-- JETTY-RUNNER version -->
+		<jetty-runner.version>3.14.0</jetty-runner.version>
+			...
+	</properties>
 
-		<!-- JCOMMONS-LANG version -->
-		<jetty-runner.version>3.8.0</jetty-runner.version>
+
+Add the following maven dependency to your project `pom.xml` if you want to import the core functionality of jetty-runner-core:
 
 		<dependencies>
 			...
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
-				<artifactId>jetty-runner</artifactId>
+				<artifactId>jetty-runner-core</artifactId>
 				<version>${jetty-runner.version}</version>
 			</dependency>
 			...
 		</dependencies>
-
 
 
 Add the following maven dependency to your project `pom.xml` if you want to import wicket-jetty9-runner:
@@ -68,6 +74,9 @@ Don't forget to add new units tests on your changes.
 Do not hesitate to contact the jetty-runner developers with your questions, concerns, comments, bug reports, or feature requests.
 - Feature requests, questions and bug reports can be reported at the [issues page](https://github.com/astrapi69/jetty-runner/issues).
 
+## Note
+
+No animals were harmed in the making of this library.
 
 # Donate
 

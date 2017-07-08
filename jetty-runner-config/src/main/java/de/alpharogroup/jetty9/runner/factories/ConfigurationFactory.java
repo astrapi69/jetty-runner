@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2015 Asterios Raptis
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package de.alpharogroup.jetty9.runner.factories;
 
 import org.eclipse.jetty.server.HttpConfiguration;
@@ -38,45 +53,21 @@ public class ConfigurationFactory
 	}
 
 	/**
-	 * Factory method for creating a new {@link SslContextFactory} from the given parameters.
+	 * Factory method for creating a new {@link SecureRequestCustomizer} from the given parameters.
 	 *
-	 * @param keyStoreResource
-	 *            the key store resource
-	 * @param keyStorePassword
-	 *            the key store password
-	 * @param keyManagerPassword
-	 *            the key manager password
-	 * @return the new {@link SslContextFactory}.
+	 * @param stsMaxAgeSeconds
+	 *            the sts max age seconds
+	 * @param stsIncludeSubDomains
+	 *            the sts include sub domains
+	 * @return the new {@link SecureRequestCustomizer}.
 	 */
-	public static SslContextFactory newSslContextFactory(final Resource keyStoreResource,
-		final String keyStorePassword, final String keyManagerPassword)
+	public static SecureRequestCustomizer newSecureRequestCustomizer(final long stsMaxAgeSeconds,
+		final boolean stsIncludeSubDomains)
 	{
-		final SslContextFactory sslContextFactory = new SslContextFactory();
-		sslContextFactory.setKeyStoreResource(keyStoreResource);
-		sslContextFactory.setKeyStorePassword(keyStorePassword);
-		sslContextFactory.setKeyManagerPassword(keyManagerPassword);
-		return sslContextFactory;
-	}
-
-	/**
-	 * Factory method for creating a new {@link SslContextFactory} from the given parameters.
-	 *
-	 * @param keyStorePath
-	 *            the key store path
-	 * @param keyStorePassword
-	 *            the key store password
-	 * @param keyManagerPassword
-	 *            the key manager password
-	 * @return the new {@link SslContextFactory}.
-	 */
-	public static SslContextFactory newSslContextFactory(final String keyStorePath,
-		final String keyStorePassword, final String keyManagerPassword)
-	{
-		final SslContextFactory sslContextFactory = new SslContextFactory();
-		sslContextFactory.setKeyStorePath(keyStorePath);
-		sslContextFactory.setKeyStorePassword(keyStorePassword);
-		sslContextFactory.setKeyManagerPassword(keyManagerPassword);
-		return sslContextFactory;
+		final SecureRequestCustomizer src = new SecureRequestCustomizer();
+		src.setStsMaxAge(stsMaxAgeSeconds);
+		src.setStsIncludeSubDomains(stsIncludeSubDomains);
+		return src;
 	}
 
 	/**
@@ -129,21 +120,45 @@ public class ConfigurationFactory
 	}
 
 	/**
-	 * Factory method for creating a new {@link SecureRequestCustomizer} from the given parameters.
+	 * Factory method for creating a new {@link SslContextFactory} from the given parameters.
 	 *
-	 * @param stsMaxAgeSeconds
-	 *            the sts max age seconds
-	 * @param stsIncludeSubDomains
-	 *            the sts include sub domains
-	 * @return the new {@link SecureRequestCustomizer}.
+	 * @param keyStoreResource
+	 *            the key store resource
+	 * @param keyStorePassword
+	 *            the key store password
+	 * @param keyManagerPassword
+	 *            the key manager password
+	 * @return the new {@link SslContextFactory}.
 	 */
-	public static SecureRequestCustomizer newSecureRequestCustomizer(final long stsMaxAgeSeconds,
-		final boolean stsIncludeSubDomains)
+	public static SslContextFactory newSslContextFactory(final Resource keyStoreResource,
+		final String keyStorePassword, final String keyManagerPassword)
 	{
-		final SecureRequestCustomizer src = new SecureRequestCustomizer();
-		src.setStsMaxAge(stsMaxAgeSeconds);
-		src.setStsIncludeSubDomains(stsIncludeSubDomains);
-		return src;
+		final SslContextFactory sslContextFactory = new SslContextFactory();
+		sslContextFactory.setKeyStoreResource(keyStoreResource);
+		sslContextFactory.setKeyStorePassword(keyStorePassword);
+		sslContextFactory.setKeyManagerPassword(keyManagerPassword);
+		return sslContextFactory;
+	}
+
+	/**
+	 * Factory method for creating a new {@link SslContextFactory} from the given parameters.
+	 *
+	 * @param keyStorePath
+	 *            the key store path
+	 * @param keyStorePassword
+	 *            the key store password
+	 * @param keyManagerPassword
+	 *            the key manager password
+	 * @return the new {@link SslContextFactory}.
+	 */
+	public static SslContextFactory newSslContextFactory(final String keyStorePath,
+		final String keyStorePassword, final String keyManagerPassword)
+	{
+		final SslContextFactory sslContextFactory = new SslContextFactory();
+		sslContextFactory.setKeyStorePath(keyStorePath);
+		sslContextFactory.setKeyStorePassword(keyStorePassword);
+		sslContextFactory.setKeyManagerPassword(keyManagerPassword);
+		return sslContextFactory;
 	}
 
 }
