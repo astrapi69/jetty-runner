@@ -65,7 +65,7 @@ The source code for jetty-runner are on GitHub. Please feel free to fork and sen
 
 Create your own fork of [astrapi69/jetty-runner/fork](https://github.com/astrapi69/jetty-runner/fork)
 
-To share your changes, [submit a pull request](https://github.com/astrapi69/jetty-runner/pull/new/master).
+To share your changes, [submit a pull request](https://github.com/astrapi69/jetty-runner/pull/new/develop).
 
 Don't forget to add new units tests on your changes.
 
