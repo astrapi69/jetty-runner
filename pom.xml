@@ -92,8 +92,8 @@
 		<commons-collections4.version>4.1</commons-collections4.version>
 		<commons-lang3.version>3.5</commons-lang3.version>
 		<!-- NEW EXTENSIONS LIB versions -->
-		<extensions-lib.version>4.15.0</extensions-lib.version>
-		<file-worker.version>${extensions-lib.version}</file-worker.version>
+		<extensions-lib.version>4.16.0</extensions-lib.version>
+		<file-worker.version>4.16.0</file-worker.version>
 	</properties>
 
 	<dependencyManagement>
