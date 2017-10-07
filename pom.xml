@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-java-parent</artifactId>
-		<version>2.26.1</version>
+		<version>2.28.0</version>
 		<relativePath></relativePath>
 	</parent>
 
@@ -90,10 +90,9 @@
 		<jetty9.version>9.4.6.v20170531</jetty9.version>
 		<!-- APACHE COMMONS LIBRARIES versions -->
 		<commons-collections4.version>4.1</commons-collections4.version>
-		<commons-lang3.version>3.5</commons-lang3.version>
-		<!-- NEW EXTENSIONS LIB versions -->
-		<extensions-lib.version>4.16.0</extensions-lib.version>
-		<file-worker.version>4.16.0</file-worker.version>
+		<commons-lang3.version>3.6</commons-lang3.version>
+		<!-- FILE-WORKER version -->
+		<file-worker.version>4.16.1</file-worker.version>
 	</properties>
 
 	<dependencyManagement>
