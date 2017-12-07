@@ -28,7 +28,7 @@
 		<commons-collections4.version>4.1</commons-collections4.version>
 		<commons-lang3.version>3.6</commons-lang3.version>
 		<!-- FILE-WORKER version -->
-		<file-worker.version>4.17.0</file-worker.version>
+		<file-worker.version>4.18.0</file-worker.version>
 	</properties>
 
 	<modules>
