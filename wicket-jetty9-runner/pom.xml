@@ -12,12 +12,12 @@
 	<artifactId>wicket-jetty9-runner</artifactId>
 	<packaging>jar</packaging>
 
+	<name>wicket-jetty9-runner</name>
+
 	<properties>
 		<!-- WICKET version -->
 		<wicket.version>7.3.0</wicket.version>
 	</properties>
-
-	<name>wicket-jetty9-runner</name>
 
 	<dependencyManagement>
 
@@ -94,7 +94,7 @@
 	</dependencies>
 
 	<build>
-	
+
 		<plugins>
 
 			<plugin>
@@ -117,9 +117,9 @@
 				<inherited>true</inherited>
 				<artifactId>maven-eclipse-plugin</artifactId>
 			</plugin>
-			
+
 		</plugins>
-		
+
 	</build>
 
 </project>
