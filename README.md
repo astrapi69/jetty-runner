@@ -1,17 +1,19 @@
 # jetty-runner
 
+<div align="center">
+
+[![license apache2](https://img.shields.io/badge/license-apache2-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![Build Status](https://travis-ci.org/astrapi69/jetty-runner.svg?branch=master)](https://travis-ci.org/astrapi69/jetty-runner)
+[![Open Issues](https://img.shields.io/github/issues/lightblueseas/jetty-runner.svg?style=flat)](https://github.com/lightblueseas/jetty-runner/issues) 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/jetty-runner/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/jetty-runner)
+
+</div>
+
 The jetty-runner project provides method that can start programmatically the jetty server.
 
 ## License
 
 The source code is released under the liberal Apache License V2.0, making jetty-runner great for all types of java web applications.
-
-# Build Status 
-[![Build Status](https://travis-ci.org/astrapi69/jetty-runner.svg?branch=master)](https://travis-ci.org/astrapi69/jetty-runner)
-
-## Maven Central
-
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/jetty-runner/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/jetty-runner)
 
 ## Maven dependency
 
@@ -26,7 +28,7 @@ You can first define the version properties:
 	<properties>
 			...
 		<!-- JETTY-RUNNER version -->
-		<jetty-runner.version>3.14.0</jetty-runner.version>
+		<jetty-runner.version>3.15.0</jetty-runner.version>
 			...
 	</properties>
 
