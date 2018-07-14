@@ -41,7 +41,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class ServletHolderConfiguration implements Serializable
 {
 	/** The serialVersionUID. */

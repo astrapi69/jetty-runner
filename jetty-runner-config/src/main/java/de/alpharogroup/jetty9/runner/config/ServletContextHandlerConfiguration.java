@@ -42,7 +42,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class ServletContextHandlerConfiguration
 {
 
@@ -56,7 +56,7 @@ public class ServletContextHandlerConfiguration
 	private String contextPath;
 	/**
 	 * Sets the timeout in seconds. Like in web.xml=>web-app=>session-config=>session-timeout
-	 * 
+	 *
 	 **/
 	private int maxInactiveInterval;
 

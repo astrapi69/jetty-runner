@@ -41,7 +41,8 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-final @Builder public class FilterHolderConfiguration implements Serializable
+@Builder(toBuilder = true)
+public class FilterHolderConfiguration implements Serializable
 {
 
 	/**

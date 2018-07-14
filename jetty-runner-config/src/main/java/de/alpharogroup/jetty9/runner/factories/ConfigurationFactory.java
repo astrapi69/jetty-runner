@@ -24,9 +24,12 @@ import org.eclipse.jetty.server.SslConnectionFactory;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * A factory for creating Configuration objects.
  */
+@UtilityClass
 public class ConfigurationFactory
 {
 

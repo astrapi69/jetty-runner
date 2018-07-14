@@ -34,7 +34,8 @@ import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.jetty9.runner.config.ServletContextHandlerConfiguration;
 
 /**
- * A factory for creating ServletContextHandler objects.
+ * The factory class {@link WicketServletContextHandlerFactory} for creating
+ * {@link ServletContextHandler} objects for wicket applications.
  */
 public class WicketServletContextHandlerFactory
 {
@@ -49,7 +50,7 @@ public class WicketServletContextHandlerFactory
 	public static ServletContextHandler newServletContextHandler(
 		final Class<? extends Application> applicationClass)
 	{
-		return newServletContextHandler(applicationClass, "/", PathFinder.getSrcMainJavaDir(), 300,
+		return newWicketServletContextHandler(applicationClass, "/", PathFinder.getSrcMainJavaDir(), 300,
 			"/*");
 	}
 
@@ -65,7 +66,7 @@ public class WicketServletContextHandlerFactory
 	public static ServletContextHandler newServletContextHandler(
 		final Class<? extends Application> applicationClass, final File webapp)
 	{
-		return newServletContextHandler(applicationClass, "/", webapp, 300, "/*");
+		return newWicketServletContextHandler(applicationClass, "/", webapp, 300, "/*");
 	}
 
 	/**
@@ -84,6 +85,9 @@ public class WicketServletContextHandlerFactory
 	 * @return the servlet context handler
 	 * @deprecated use instead
 	 *             {@link WicketServletContextHandlerFactory#newWicketServletContextHandler(Class, String, File, int, String)}
+	 *             <br>
+	 *             <br>
+	 *             Note: will be removed in the next minor release
 	 */
 	@Deprecated
 	public static ServletContextHandler newServletContextHandler(
@@ -102,6 +106,9 @@ public class WicketServletContextHandlerFactory
 	 * @return the servlet context handler
 	 * @deprecated use instead
 	 *             {@link WicketServletContextHandlerFactory#newWicketServletContextHandler(ServletContextHandlerConfiguration)}
+	 *             <br>
+	 *             <br>
+	 *             Note: will be removed in the next minor release
 	 */
 	@Deprecated
 	public static ServletContextHandler newServletContextHandler(
@@ -131,7 +138,7 @@ public class WicketServletContextHandlerFactory
 	{
 		final Map<String, String> initParameters = Generics.newHashMap();
 		initParameters.put(WicketFilter.FILTER_MAPPING_PARAM, filterPath);
-		return newServletContextHandler(
+		return newWicketServletContextHandler(
 			ServletContextHandlerConfiguration.builder().applicationClass(applicationClass)
 				.contextPath(contextPath).webapp(webapp).maxInactiveInterval(maxInactiveInterval)
 				.initParameter(WicketFilter.FILTER_MAPPING_PARAM, filterPath).filterPath(filterPath)

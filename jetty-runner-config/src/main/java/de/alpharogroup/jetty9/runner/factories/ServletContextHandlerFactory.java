@@ -31,7 +31,13 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import de.alpharogroup.jetty9.runner.config.FilterHolderConfiguration;
 import de.alpharogroup.jetty9.runner.config.ServletContextHandlerConfiguration;
 import de.alpharogroup.jetty9.runner.config.ServletHolderConfiguration;
+import lombok.experimental.UtilityClass;
 
+/**
+ * The factory class {@link ServletContextHandlerFactory} for creating {@link ServletContextHandler}
+ * objects.
+ */
+@UtilityClass
 public class ServletContextHandlerFactory
 {
 

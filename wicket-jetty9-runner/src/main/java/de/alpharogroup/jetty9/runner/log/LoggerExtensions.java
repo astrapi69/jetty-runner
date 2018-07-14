@@ -25,8 +25,11 @@ import lombok.experimental.UtilityClass;
 /**
  * Logger extensions for appenders.
  *
- * @deprecated use instead de.alpharogroup.log.LoggerExtensions
+ * @deprecated use instead {@code de.alpharogroup.log.LoggerExtensions} <br>
+ *             <br>
+ *             Note: will be removed in the next minor release
  */
+@Deprecated
 @UtilityClass
 public class LoggerExtensions
 {
