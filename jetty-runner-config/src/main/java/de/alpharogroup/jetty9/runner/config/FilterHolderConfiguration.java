@@ -53,12 +53,12 @@ public class FilterHolderConfiguration implements Serializable
 	/** The filter class. */
 	private Class<? extends Filter> filterClass;
 
+	/** The filter path. */
+	private String filterPath;
+
 	/** The init parameters. */
 	@Singular
 	private Map<String, String> initParameters;
-
-	/** The filter path. */
-	private String filterPath;
 
 	/** The name. */
 	private String name;
