@@ -1,9 +1,16 @@
 ## Change log
 ----------------------
 
-Version 3.16.0-SNAPSHOT
+Version 3.16
 -------------
 
+CHANGED:
+
+- update of parent version from 3.7.0 to 4
+- removed unneeded .0 at the end of version
+- update of jetty9 dependency versions from 9.4.8.v20171121 to 9.4.11.v20180605
+- update of commons-collections4 dependency versions from 4.1 to 4.2
+- update of file-worker dependency versions from 4.19.0 to 4.22
 
 Version 3.15.0
 -------------

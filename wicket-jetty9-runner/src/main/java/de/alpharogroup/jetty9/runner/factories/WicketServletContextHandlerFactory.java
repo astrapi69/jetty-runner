@@ -50,8 +50,8 @@ public class WicketServletContextHandlerFactory
 	public static ServletContextHandler newServletContextHandler(
 		final Class<? extends Application> applicationClass)
 	{
-		return newWicketServletContextHandler(applicationClass, "/", PathFinder.getSrcMainJavaDir(), 300,
-			"/*");
+		return newWicketServletContextHandler(applicationClass, "/", PathFinder.getSrcMainJavaDir(),
+			300, "/*");
 	}
 
 	/**
