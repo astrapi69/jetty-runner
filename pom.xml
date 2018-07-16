@@ -12,7 +12,7 @@
 	</parent>
 
 	<artifactId>jetty-runner</artifactId>
-	<version>3.16</version>
+	<version>3.17-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<inceptionYear>2015</inceptionYear>
 	<name>jetty-runner</name>
