@@ -20,9 +20,12 @@ import org.eclipse.jetty.deploy.PropertiesConfigurationManager;
 import org.eclipse.jetty.deploy.providers.WebAppProvider;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * A factory for creating DeploymentManager objects.
  */
+@UtilityClass
 public class DeploymentManagerFactory
 {
 

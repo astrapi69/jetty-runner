@@ -41,11 +41,20 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class Jetty9RunConfiguration
 {
-	/** The servlet context handler. */
-	private ServletContextHandler servletContextHandler;
+	/** The contexts. */
+	private ContextHandlerCollection contexts;
+
+	/** The deployer. */
+	private DeploymentManager deployer;
+
+	/** The handlers. */
+	private HandlerCollection handlers;
+
+	/** The http configuration. */
+	private HttpConfiguration httpConfiguration;
 
 	/** The http port. */
 	private int httpPort;
@@ -53,21 +62,12 @@ public class Jetty9RunConfiguration
 	/** The https port. */
 	private int httpsPort;
 
-	/** The key store path resource. */
-	private String keyStorePathResource;
-
 	/** The key store password. */
 	private String keyStorePassword;
 
-	/** The handlers. */
-	private HandlerCollection handlers;
+	/** The key store path resource. */
+	private String keyStorePathResource;
 
-	/** The contexts. */
-	private ContextHandlerCollection contexts;
-
-	/** The deployer. */
-	private DeploymentManager deployer;
-
-	/** The http configuration. */
-	private HttpConfiguration httpConfiguration;
+	/** The servlet context handler. */
+	private ServletContextHandler servletContextHandler;
 }

@@ -42,39 +42,39 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class ServletContextHandlerConfiguration
 {
 
 	/** The application class for wicket. */
 	private Class<?> applicationClass;
 
-	/** The webapp. */
-	private File webapp;
-
 	/** The context path. */
 	private String contextPath;
-	/**
-	 * Sets the timeout in seconds. Like in web.xml=>web-app=>session-config=>session-timeout
-	 * 
-	 **/
-	private int maxInactiveInterval;
-
-	/** The filter path. */
-	private String filterPath;
 
 	/** The filter holder configurations. */
 	@Singular
 	private List<FilterHolderConfiguration> filterHolderConfigurations;
-
-	/** The servlet holder configurations. */
-	@Singular
-	private List<ServletHolderConfiguration> servletHolderConfigurations;
+	/** The filter path. */
+	private String filterPath;
 
 	/** The init parameters. */
 	@Singular
 	private Map<String, String> initParameters;
 
+	/**
+	 * Sets the timeout in seconds. Like in web.xml=>web-app=>session-config=>session-timeout
+	 *
+	 **/
+	private int maxInactiveInterval;
+
 	/** The parent. */
 	private HandlerContainer parent;
+
+	/** The servlet holder configurations. */
+	@Singular
+	private List<ServletHolderConfiguration> servletHolderConfigurations;
+
+	/** The webapp. */
+	private File webapp;
 }

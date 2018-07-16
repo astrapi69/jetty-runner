@@ -41,23 +41,23 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class ServletHolderConfiguration implements Serializable
 {
 	/** The serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The servlet class. */
-	private Class<? extends Servlet> servletClass;
-
 	/** The init parameters. */
 	@Singular
 	private Map<String, String> initParameters;
 
+	/** The name. */
+	private String name;
+
 	/** The path spec. */
 	private String pathSpec;
 
-	/** The name. */
-	private String name;
+	/** The servlet class. */
+	private Class<? extends Servlet> servletClass;
 
 }

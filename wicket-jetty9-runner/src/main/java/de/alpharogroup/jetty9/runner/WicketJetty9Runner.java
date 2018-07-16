@@ -40,7 +40,7 @@ import de.alpharogroup.jetty9.runner.factories.WicketServletContextHandlerFactor
 import de.alpharogroup.log.LoggerExtensions;
 
 /**
- * The Class {@link WicketJetty9Runner}.
+ * The class {@link WicketJetty9Runner} provides methods for start wicket applications
  */
 public class WicketJetty9Runner
 {

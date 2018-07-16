@@ -34,36 +34,27 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class StartConfig
 {
-
-	/** The project name. */
-	private String projectName;
-
-	/** The application name. */
-	private String applicationName;
-
-	/** The runtime configuration type. */
-	private String runtimeConfigurationType;
-
-	/** The session timeout. */
-	private int sessionTimeout;
-
-	/** The project directory. */
-	private File projectDirectory;
-
-	/** The log file. */
-	private File logFile;
 
 	/** The absolute path from logfile. */
 	private String absolutePathFromLogfile;
 
-	/** The webapp. */
-	private File webapp;
+	/** The application name. */
+	private String applicationName;
+
+	/** The context path. */
+	private String contextPath;
 
 	/** The filter path. */
 	private String filterPath;
+
+	/** The http port. */
+	private int httpPort;
+
+	/** The https port. */
+	private int httpsPort;
 
 	/** The key store password. */
 	private String keyStorePassword;
@@ -71,13 +62,22 @@ public class StartConfig
 	/** The key store path resource. */
 	private String keyStorePathResource;
 
-	/** The context path. */
-	private String contextPath;
+	/** The log file. */
+	private File logFile;
 
-	/** The http port. */
-	private int httpPort;
+	/** The project directory. */
+	private File projectDirectory;
 
-	/** The https port. */
-	private int httpsPort;
+	/** The project name. */
+	private String projectName;
+
+	/** The runtime configuration type. */
+	private String runtimeConfigurationType;
+
+	/** The session timeout. */
+	private int sessionTimeout;
+
+	/** The webapp. */
+	private File webapp;
 
 }

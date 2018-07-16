@@ -47,10 +47,12 @@ import de.alpharogroup.jetty9.runner.config.Jetty9RunConfiguration;
 import de.alpharogroup.jetty9.runner.config.StartConfig;
 import de.alpharogroup.jetty9.runner.factories.ConfigurationFactory;
 import de.alpharogroup.log.LoggerExtensions;
+import lombok.experimental.UtilityClass;
 
 /**
- * The Class {@link Jetty9Runner}.
+ * The class {@link Jetty9Runner}
  */
+@UtilityClass
 public class Jetty9Runner
 {
 	public static final String HTTPS = "https";
