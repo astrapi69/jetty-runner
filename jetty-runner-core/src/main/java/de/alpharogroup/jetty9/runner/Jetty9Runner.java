@@ -19,10 +19,10 @@ package de.alpharogroup.jetty9.runner;
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.util.logging.Level;
 
 import javax.management.MBeanServer;
 
-import org.apache.log4j.Logger;
 import org.eclipse.jetty.deploy.DeploymentManager;
 import org.eclipse.jetty.http.HttpVersion;
 import org.eclipse.jetty.jmx.MBeanContainer;
@@ -46,18 +46,17 @@ import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.jetty9.runner.config.Jetty9RunConfiguration;
 import de.alpharogroup.jetty9.runner.config.StartConfig;
 import de.alpharogroup.jetty9.runner.factories.ConfigurationFactory;
-import de.alpharogroup.log.LoggerExtensions;
 import lombok.experimental.UtilityClass;
+import lombok.extern.java.Log;
 
 /**
  * The class {@link Jetty9Runner}
  */
 @UtilityClass
+@Log
 public class Jetty9Runner
 {
 	public static final String HTTPS = "https";
-	/** The Constant logger. */
-	private static final Logger logger = Logger.getLogger(Jetty9Runner.class.getName());
 
 	/**
 	 * Gets the log file.
@@ -79,7 +78,7 @@ public class Jetty9Runner
 			}
 			catch (final IOException e)
 			{
-				Logger.getRootLogger().error("logfile could not deleted.", e);
+				log.log(Level.SEVERE, "logfile could not deleted.", e);
 			}
 		}
 		return logfile;
@@ -212,28 +211,28 @@ public class Jetty9Runner
 
 				server.addConnector(https);
 
-				logger.info(
+				log.info(
 					"***************************************************************************");
-				logger.info("**  SSL access to the application has been enabled on port "
+				log.info("**  SSL access to the application has been enabled on port "
 					+ config.getHttpsPort() + ".         **");
-				logger.info("**  You can access the application using SSL on https://localhost:"
+				log.info("**  You can access the application using SSL on https://localhost:"
 					+ config.getHttpsPort() + ".  **");
-				logger.info(
+				log.info(
 					"***************************************************************************");
 
 			}
 			else
 			{
-				logger.error("*****************************************************");
-				logger.error("**  Keystore is null. Provide a keystore for ssh.  **");
-				logger.error("*****************************************************");
+				log.severe("*****************************************************");
+				log.severe("**  Keystore is null. Provide a keystore for ssh.  **");
+				log.severe("*****************************************************");
 			}
 		}
 		else
 		{
-			logger.info("***************************************************");
-			logger.info("**  Keystore path is null. You can not use ssh.  **");
-			logger.info("***************************************************");
+			log.info("***************************************************");
+			log.info("**  Keystore path is null. You can not use ssh.  **");
+			log.info("***************************************************");
 		}
 
 		if (config.getHandlers() == null)
@@ -335,13 +334,9 @@ public class Jetty9Runner
 			}
 			catch (final IOException e)
 			{
-				Logger.getRootLogger().error("logfile could not deleted.", e);
+				log.log(Level.SEVERE, "logfile could not deleted.", e);
 			}
 		}
-		// Add a file appender to the logger programatically
-		LoggerExtensions.addFileAppender(Logger.getRootLogger(),
-			LoggerExtensions.newFileAppender(startConfig.getAbsolutePathFromLogfile()));
-
 	}
 
 	/**
@@ -399,28 +394,28 @@ public class Jetty9Runner
 
 				server.addConnector(https);
 
-				logger.info(
+				log.info(
 					"***************************************************************************");
-				logger.info("**  SSL access to the application has been enabled on port "
+				log.info("**  SSL access to the application has been enabled on port "
 					+ config.getHttpsPort() + ".         **");
-				logger.info("**  You can access the application using SSL on https://localhost:"
+				log.info("**  You can access the application using SSL on https://localhost:"
 					+ config.getHttpsPort() + ".  **");
-				logger.info(
+				log.info(
 					"***************************************************************************");
 
 			}
 			else
 			{
-				logger.error("*****************************************************");
-				logger.error("**  Keystore is null. Provide a keystore for ssh.  **");
-				logger.error("*****************************************************");
+				log.severe("*****************************************************");
+				log.severe("**  Keystore is null. Provide a keystore for ssh.  **");
+				log.severe("*****************************************************");
 			}
 		}
 		else
 		{
-			logger.info("***************************************************");
-			logger.info("**  Keystore path is null. You can not use ssh.  **");
-			logger.info("***************************************************");
+			log.info("***************************************************");
+			log.info("**  Keystore path is null. You can not use ssh.  **");
+			log.info("***************************************************");
 		}
 
 

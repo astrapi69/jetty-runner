@@ -4,6 +4,11 @@
 Version 3.17-SNAPSHOT
 -------------
 
+CHANGED:
+
+- update of parent version to 4.5
+- removed external logging dependencies
+
 
 Version 3.16
 -------------

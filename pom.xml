@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-java-parent</artifactId>
-		<version>4</version>
+		<version>4.5</version>
 		<relativePath></relativePath>
 	</parent>
 
@@ -15,11 +15,11 @@
 	<version>3.17-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<inceptionYear>2015</inceptionYear>
-	<name>jetty-runner</name>
+	<name>${project.artifactId}</name>
 
 	<description>Parent project for the projects that want to run jetty.</description>
 
-	<url>https://github.com/astrapi69/jetty-runner</url>
+	<url>https://github.com/astrapi69/${project.artifactId}</url>
 
 	<properties>
 		<!-- JETTY 9 version -->
@@ -28,7 +28,7 @@
 		<commons-collections4.version>4.2</commons-collections4.version>
 		<commons-lang3.version>3.7</commons-lang3.version>
 		<!-- FILE-WORKER version -->
-		<file-worker.version>4.22</file-worker.version>
+		<file-worker.version>5.0.1</file-worker.version>
 	</properties>
 
 	<modules>
@@ -53,19 +53,19 @@
 	</developers>
 
 	<scm>
-		<connection>scm:git:git:@github.com:astrapi69/jetty-runner.git</connection>
-		<developerConnection>scm:git:git@github.com:astrapi69/jetty-runner.git</developerConnection>
-		<url>git:@github.com:astrapi69/jetty-runner.git</url>
+		<connection>scm:git:git:@github.com:astrapi69/${project.artifactId}.git</connection>
+		<developerConnection>scm:git:git@github.com:astrapi69/${project.artifactId}.git</developerConnection>
+		<url>git:@github.com:astrapi69/${project.artifactId}.git</url>
 	</scm>
 
 	<issueManagement>
 		<system>github</system>
-		<url>https://github.com/astrapi69/jetty-runner/issues</url>
+		<url>https://github.com/astrapi69/${project.artifactId}/issues</url>
 	</issueManagement>
 
 	<ciManagement>
 		<system>travis-ci</system>
-		<url>https://travis-ci.org/astrapi69/jetty-runner</url>
+		<url>https://travis-ci.org/astrapi69/${project.artifactId}</url>
 	</ciManagement>
 
 	<dependencyManagement>
