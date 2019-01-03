@@ -28,7 +28,7 @@ You can first define the version properties:
 	<properties>
 			...
 		<!-- JETTY-RUNNER version -->
-		<jetty-runner.version>3.15.0</jetty-runner.version>
+		<jetty-runner.version>3.16.1</jetty-runner.version>
 			...
 	</properties>
 

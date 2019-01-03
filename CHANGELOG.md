@@ -1,6 +1,15 @@
 ## Change log
 ----------------------
 
+Version 3.16.1
+-------------
+
+CHANGED:
+
+- update of parent version to 4.5
+- removed external logging dependencies
+
+
 Version 3.16
 -------------
 
