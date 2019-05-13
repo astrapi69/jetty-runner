@@ -16,7 +16,7 @@
 
 	<properties>
 		<!-- WICKET version -->
-		<wicket.version>7.3.0</wicket.version>
+		<wicket.version>7.13.0</wicket.version>
 	</properties>
 
 	<dependencyManagement>

@@ -4,6 +4,14 @@
 Version 3.17-SNAPSHOT
 -------------
 
+CHANGED:
+
+- update of parent version to 5
+- update of jetty9 dependency versions to 9.4.18.v20190429
+- update of commons-lang3 dependency version to 3.9
+- update of commons-collections4 dependency version to 4.3
+- update of wicket dependency version to 7.13.0
+
 Version 3.16.1
 -------------
 
