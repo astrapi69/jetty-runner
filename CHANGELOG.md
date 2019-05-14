@@ -11,6 +11,7 @@ CHANGED:
 - update of commons-lang3 dependency version to 3.9
 - update of commons-collections4 dependency version to 4.3
 - update of wicket dependency version to 7.13.0
+- update of file-worker version to 5.2
 
 Version 3.16.1
 -------------
